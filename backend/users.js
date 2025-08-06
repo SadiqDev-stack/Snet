@@ -12,7 +12,7 @@ const goOffline = uid => {
   onlineCount--
 }
 
-const isOnline = uid => (onlineUsers[uid] !== null)
+const isOnline = uid => onlineUsers[uid]
 
 const getUser = uid => onlineUsers[uid]
 

@@ -8,7 +8,7 @@ const pending = new Schema({
     type: ObjectId
   },
   to: {
-    type: [ObjectId],
+    type: Object,
     required: true
   },
   name: {

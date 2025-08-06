@@ -893,7 +893,7 @@ filterChats()
     userInfo = data.userInfo
     setData("chats", data.chats);
     setData("userInfo", data.userInfo);
-    //updateUi(data);
+    updateUi(data);
   }
   
   
@@ -1016,10 +1016,9 @@ const MAX_CHAT_RENDER = 10;
   
  if(chats.length && userInfo){
    updateUi({chats, userInfo});
-   updateDashboard(token);
+  // updateDashboard()
  }else{
    updateDashboard(token)
-   close(PlashScreen)
  }
  
  
@@ -1499,6 +1498,7 @@ setInterval(() => {
 
 const goOnline = () => {
   const chatIds = chats.map(chat => chat._id);
+  chatIds.push(userId)
   emitSocket('go online', chatIds)
 }
 

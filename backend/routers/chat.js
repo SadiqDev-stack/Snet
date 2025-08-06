@@ -347,11 +347,6 @@ app.post("/create", upload.single("groupPic"), async (req, res) => {
           chatData.groupPic = fileData
       }
                 
-    let inserted = 0;
-    while(inserted < 100){
-        await Chat.create(chatData)
-        inserted++
-    }
     
     const chat = await Chat.create(chatData);
              
@@ -452,32 +447,15 @@ app.post("/join", async (req, res) => {
                    message: "you are already in chat"
                })
            }else if(chat.type !== "private"){
-              chat.peoples.push(id)
+              chat.peoples.push(id.toString())
            }
            
            
            await chat.save();
            setCache(`chats:${chat._id.toString()}`, chat, 300)
            
-           chat = await chat.populate("peoples", "_id name bio lastSeen profilePic")
            
-           const messages = await Message.find({
-               to: chat._id.toString()
-           }).populate("from", "_id name")
-           
-           chat = chat.toObject();
-           chat.messages = messages || []
-           
-           chat.peoples = chat.peoples.map(person => {
-               person.online = isOnline(person._id)
-               return person
-           })
-           
-           res.json({
-               joined: true,
-               chat
-           })
-           
+                      
            // show joined only if he isnt blocked
            if(socket){
                isBlocked = chat.blockedPeoples.find(_id => _id.toString() == id.toString());
@@ -504,15 +482,38 @@ app.post("/join", async (req, res) => {
                        bio: user.bio,
                        _id: user._id.toString()
                    }
-                   emitSocket(id, chat).emit("joined group", { ...systemMessage, person})
+                   
+                   
+                   await emitSocket(id, chat, "joined group", { ...systemMessage, person})
                }
            }
        }
        
        // join only if not blocked
-       if (!isBlocked) {
+       if (!isBlocked && socket) {
          socket.join(chat._id.toString())
        }
+           
+           
+           chat = await chat.populate("peoples", "_id name bio lastSeen profilePic")
+           
+           const messages = await Message.find({
+               to: chat._id.toString()
+           }).populate("from", "_id name")
+           
+           chat = chat.toObject();
+           chat.messages = messages || []
+           
+           chat.peoples = chat.peoples.map(person => {
+               person.online = isOnline(person._id)
+               return person
+           })
+           
+           
+           res.json({
+               joined: true,
+               chat
+           })
        
     }catch(er){
         log(er, "bad")

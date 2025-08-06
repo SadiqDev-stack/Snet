@@ -1,37 +1,44 @@
 import Pending from './models/pending.js';
-import {isOnline, getSocket} from "./users.js";
+import { isOnline, getSocket } from "./users.js";
 
-const emitSocket = async (id, to) => {
-  let socket = getSocket(id)
-  return {
-    emit: async (name, data) => {
-      const offlineMembers = [];
-      const onlineMembers = [];
-      for(const p in to.peoples){
-        if(typeof p == Object){
-          p = String(p._id) || String(p)
-        }
-        
-        if(p !== id){
-          if(!isOnline(p) || !socket){
-            offlineMembers.push(p)
-          }else{
-            onlineMembers.push(p)
-          }
-        }
-      }
-      // they must come online to receive there messages 
-      await Pending.create({
-        to: offlineMembers,
-        from: id,
-        name,
-        data
-      })
-      // send to online members
-      socket.to(onlineMembers).emit(name, data)
+const emitSocket = async (id, to, name, data) => {
+  const socket = getSocket(id);
+  const offlineMembers = [];
+  const onlineMembers = [];
+
+  for (const person of to.peoples) {
+    const personId = person.toString()
+    if (personId === id.toString()) continue;
+    
+    if (!isOnline(personId)) {
+      offlineMembers.push(personId);
+    } else {
+      onlineMembers.push(personId);
     }
   }
-}
+
+  // Save messages for offline members
+  if (offlineMembers.length) {
+    await Pending.create({
+      to: offlineMembers,
+      from: id.toString(),
+      name,
+      data
+    });
+  }
+  
+
+  // Emit to online members
+  if (onlineMembers.length && socket) {
+    for (const memberId of onlineMembers) {
+      const memberSocket = getSocket(memberId);
+      if (memberSocket) {
+        memberSocket.emit(name, data);
+      }
+    }
+  }
+
+ };
 
 const listenSocket = (id, name, cb) => {
   getSocket(id)?.listen(name, cb)

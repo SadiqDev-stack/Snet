@@ -83,31 +83,43 @@ function start() {
                 goOnline(id.toString(), socket)
                 log(`${name} goes online`);
 
-                socket.join([...chatIds, socker.user.id]);
+                socket.join(chatIds)
                 socket.to(chatIds).emit("goes online", {
                     chatIds: io.chatIds,
                     personId: id
                 });
                 
+                
                 // retrieving and loading pending socket messages that are sent you are offline
                 const pendingMessages = await Pending.find({
                     from: {
-                        neq: id
+                        $ne: id.toString()
                     },
-                    to: {
-                        $in: [id]
-                    }
+                    to: id.toString()
                 })
                 
+                
+               const pendingToDelete = []
                pendingMessages.forEach(async msg => {
-                   socket.to(id).emit(msg.name, msg.data)
-                   msg.to = msg.to.filter(p => {
-                       return p._id !== id
+                   msg = msg.toObject()
+                   socket.emit(msg.name, msg.data)
+                   msg.to = msg.to.filter(_id => {
+                       return _id.toString() !== id.toString()
                    })
                    if(msg.to.length == 0){
-                       await Pending.findByIdAndDelete(msg._id)
+                       pendingToDelete.push(msg._id)
                    }
                })
+               
+               if(pendingToDelete.length){
+               await Pending.deleteMany({
+                   _id: {
+                       $in: pendingToDelete
+                   }
+               })
+               }
+               
+               
             } catch (er) {
                 log(er, "bad")
                 cb(false);
