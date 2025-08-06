@@ -1,0 +1,391 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home</title>
+  <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon" />
+  <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+  <script src="appMaker.js" type="text/javascript" charset="utf-8"></script>
+  <style>
+    html,body {
+      overflow: hidden;
+      overflow-y: scroll;
+    }
+    
+    
+    header {
+      width: 100%;
+      align-self: center;
+    }
+    
+    header .head {
+      margin: 2rem 0;
+    }
+    
+    header .detail{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      
+    }
+    
+    header .detail p{
+      width: 90%;
+    }
+    
+    
+    header .head {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    
+    header .poster {
+      align-self: center;
+    }
+    
+    /* default */
+    img {
+      width: 10%;
+      align-self: center;
+    }
+    
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin: 0;
+    }
+    
+    .title {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+    
+    main {
+      display: grid;
+      row-gap: 1rem;
+      
+      margin: 1rem 0;
+      padding: 0.5rem;
+    }
+    
+     b {
+      display: block;
+      margin: 0.5rem 0;
+      align-self: flex-start;
+    }
+    
+    .wrapper {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      animation: null .5s .2s forwards linear;
+      opacity: 0;
+      transform: translateY(20%);
+    }
+    
+
+
+    
+    @keyframes popin{
+      to{
+        opacity: 1;
+        transform: translateY(0%);
+      }
+    }
+    
+    @keyframes popout{
+      to{
+        opacity: 0;
+        transform: translateY(20%);
+      }
+    }
+    
+    .auth {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      row-gap: 1rem;
+      margin: 1rem 0;
+    }
+    
+    a {
+      width: 80%;
+      padding: 0.5rem;
+      text-align: center;
+      border: none;
+      border-radius: 0.5rem;
+      background: var(--button-bg)!important;
+      border: 1px solid var(--button-border);
+      text-decoration: none;
+      align-self: center;
+      color: black;
+    }
+    
+    img {
+      width: 90%;
+      height: 250px;
+      border-radius: 0.5rem;
+      margin: 2rem;
+    }
+    
+    .media {
+      display: flex;
+      column-gap: 2rem;
+      width: 90%;
+      align-self: center;
+    }
+    
+    footer {
+      margin: 1rem 0;
+      width: 100%;
+    }
+    
+    
+    
+    hr {
+      width: 90%;
+    }
+    
+    .download {
+      margin: 1rem 0;
+    }
+    
+    .ceo{
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+    }
+    
+    
+    
+
+
+    
+    @media (min-width: 600px) {
+      body {
+        font-size: 110%;
+      }
+      
+      main {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 7rem;
+        column-gap: 1.5rem;
+      }
+      
+      header .body {
+        margin: 3rem 0;
+      }
+      
+      hr {
+        margin: 3rem 0;
+      }
+      
+      header .wrapper .poster {
+        height: 550px;
+      }
+      
+      main {
+        padding: 1rem;
+      }
+      
+      main .wrapper img {
+        height: 300px;
+      }
+      
+      .ceo{
+        width: 150px;
+        height: 150px!important;
+      }
+    }
+    
+   footer .statsDisplay{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+    }
+    
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="head">
+      <img class="logo" src="./images/logo.png" alt="" />
+      <h3 class="title">Welcome to snet</h3>
+    </div>
+    <div class="detail wrapper">
+      <p>
+      Snet is a fast small secure social media that allow user to chat with 
+      peoples around the world by joining  or creating groups,
+      seamlessly for free
+      speed and security is our concern
+        register now for free and chat with friends around the world
+      </p>
+      
+      <div class="wrapper">
+        <img class="poster" src="./images/poster.png" alt="" />
+        <div class="auth">
+          <a  href="register.html" class="register clickable">Register Account</a>
+          <a href="login.html" class="login clickable">Login</a>
+        </div>
+      </div>
+    </div>
+    
+  </header>
+  <hr />
+  
+  <main>
+    <div class="wrapper features">
+      <h2 class="left">Features</h2>
+      <b>Real time connection</b>
+      <img src="./images/poster2.png" alt="" />
+      share chat thought ideas with friends and families, with our
+      user friendly interface, you navigate seamlessly and use app
+      without tutoring favouring your needs ,
+    </div>
+    
+    <div class="wrapper">
+      <b>Security And Privacy</b>
+      <img src="./images/security.png" alt="" />
+      with Snet your information are stored securely by implementing
+      modern security majors, sensitive information are hashed with
+      cryptography, we implement authentication and authorization
+      techniques which allow token based usage that expire and need to
+      refresh after some times
+    </div>
+    
+    <div class="wrapper">
+      <b>Constantly Evolving</b>
+      <img src="./images/evolving.png" alt="" />
+      
+      by adding new features everyday we ensure our app to grow and
+      feed users need , every month we announce and add new features in our universal groups,
+      we receive experience from users and meet there need
+    </div>
+    
+    <div class="wrapper">
+      <h2>Enjoy</h2>
+      <img src="./images/stats.png" alt="" />
+      <p>
+        dont miss this great app, open your account and enjoy 
+        chatting with friends sharply for free 
+      </p>
+    </div>
+    
+    <div class="wrapper">
+      <img class="ceo" src="./images/ceo.png" alt="">
+      <p>
+        <b><em>the ceo of snet says!! </em></b>
+        <br>
+       over time we will make this app so amazing that you will start missing it more than 
+       the popular social media apps, we will check there lack and add more features to ours, 
+       we will make this app to have all features that Facebook and WhatsApp have , <b>two in one </b>
+       over time you can make voice replies , make video calls, do meetings , share images videos and other files ,
+       your files will be respectfully stored with there high quality
+      </p>
+    </div>
+    
+    <div class="wrapper">
+      <img src="./images/policy.png" alt="">
+      <h3>Policy</h3>
+      <p>
+        in other to keep this app and everybodies information secure, we highly recommend 
+        people's to read , understand and comply with our rules before resigtering , 
+        if not correctly followed that persons account should be suspended or deleted totally
+        for violating our laws, policies are found in registeration page
+      </p>
+    </div>
+    
+    <div class="wrapper">
+      <h2>Social Media Pages</h2>
+      <img src="./images/social.png" alt="" />
+      <p>
+        follow our pages on other social media platforms, to check
+        for new update, report issues and more
+      </p>
+      <div class="media">
+        <a class="clickable" href="">facebook</a>
+        <a class="clickable" href="">instagram</a>
+        <a class="clickable" href="">twitter</a>
+      </div>
+    </div>
+    
+    <div class="wrapper">
+      <h2>Get the app</h2>
+      <img src="./images/appshow.png" alt="" />
+      <b>
+        you can install our apps directly by clicking the button below
+      </b>
+      
+      <a href="download.html" class="download clickable">Download App</a>
+    </div>
+   
+  </main>
+  <hr />
+  <footer>
+    <div class="copyright">&copy; 2025 Snet All right reserved</div>
+    <div class="statsDisplay">
+      loading statitics..
+    </div>
+   </footer>
+   
+   
+
+
+  <script src="chart.js"></script>
+  <script src="main.js"></script>
+  <script>
+    
+ const wrappers = $('*.wrapper');
+    
+
+ const inView = element => {
+   const rects = element.getBoundingClientRect();
+   return (rects.y <= innerHeight && rects.y + rects.height >= 0 && rects.x + rects.width >= 0 && rects.x <= innerWidth)
+ }
+ 
+ 
+ const handlePoping = () => {
+   wrappers.forEach(wrapper => {
+       wrapper.style.animationName = inView(wrapper) ? "popin" : "popout"
+     }
+   )
+ }
+ 
+ document.body.addEventListener("scroll", handlePoping)
+ 
+ handlePoping();
+ 
+ // loading stats 
+ const Stats = $('.statsDisplay');
+ const loadStats = () => {
+   fetch(`http://localhost:8080/api/stats/public`)
+   .then(res => res.json())
+   .then(stats => {
+     clear(Stats)
+     stats.forEach(data => {
+       Stats.appendChild(stat(data))
+     })
+   })
+ }
+ 
+ loadStats()
+ 
+ setInterval(popup, 500)
+ 
+ // add peoples preview , faqs , video showcase
+
+ 
+  </script>
+</body>
+
+</html>

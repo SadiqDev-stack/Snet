@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Login</title>
+        <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .logo {
+                margin: 2rem;
+            }
+
+            .card {
+                row-gap: 2rem;
+                min-height: 400px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <img src="./images/logo.png" alt="" class="logo" />
+        <div class="card modal1">
+            <h3>Enter identification data</h3>
+            <input placeholder="email" type="email" />
+            <input placeholder="password" type="password" />
+            <label for=""
+                >don't have an account ?
+                <a href="register.html">register here</a></label
+            >
+            <button class="complete clickable">Login</button>
+             <label for="">
+                forgotten password ?
+                <a href="reset.html">Reset Password</a>
+            </label>
+        </div>
+        
+
+        <script src="main.js"></script>
+        <script src="axios.js"></script>
+        <script>
+            const [emailInput, passwordInput] = $("*input");
+
+            const loginBtn = $("button");
+            const cresidential = {
+                email: "",
+                password: ""
+            };
+
+            onInput(emailInput, value => {
+    cresidential.email = value.trim()
+})
+
+            onInput(passwordInput, value => {
+    cresidential.password = value.trim()
+})
+
+            const valid = ({ email, password }) => {
+                let valid = false;
+                if (!email.includes("@gmail.com") || email.length < minLength) {
+                    alert("short or invalid email", false);
+                } else if (password.length < minLength) {
+                    alert("short or empty password", false);
+                } else {
+                    valid = true;
+                }
+                return valid;
+            };
+
+            loginBtn.onclick = () => {
+                if (valid(cresidential)) {
+                    load(true);
+                    axios.post("http://localhost:8080/api/user/login", cresidential)
+    .then(res => {
+        const user = res.data;
+        if (user.found) {
+            alert("Login Succefull");
+            setData("userData", user.data);
+            if (!user.verified) {
+                navigate("verify.html");
+                return;
+            }
+            navigate(`${user.role}_dashboard.html`);
+        } else {
+            alert(user.message, false);
+        }
+    })
+    .catch(er => {
+        console.log(er);
+        alert("network error", false);
+    })
+    .finally(() => load(false));
+                }
+            };
+        </script>
+    </body>
+</html>

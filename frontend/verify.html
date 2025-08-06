@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Verify</title>
+  <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+  <style>
+    
+    body{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      row-gap: 1rem;
+    }
+    
+    .icon{
+      width: 200px;
+      height: 200px;
+      margin: 3rem;
+      border-radius: 50%;
+      border: 5px solid #5DFF9E;
+    }
+    
+    .detail, .requestText{
+      width: 95%;
+      text-align: center;
+    }
+    
+    .requestText{
+      font-weight: bold;
+      margin-top: 3rem;
+    }
+    
+    .active{
+      pointer-events: normal;
+    }
+    
+    .inactive{
+      background: #A2A2A2;
+      color: black;
+      pointer-events: none;
+    }
+    
+    
+  </style>
+</head>
+<body>
+  
+  <img class="icon" src="./images/email.png" alt="">
+  <div class="detail">
+    to confirm it is your email, we have sent a verification link to your email, 
+    click the verification link to verify your email and S'net account to continue to dashboard
+  </div>
+  
+  <div class="requestText">
+    didn't receive an email message yet, click button below to request new one
+  </div>
+  <button class="request active clickable">
+    Request Verification Email
+  </button>
+  
+  <div class="email"></div>
+  <script src="main.js"></script>
+  <script>
+  
+ 
+  
+ onload = () => {
+ 
+ const Email = $('.email');
+ const RequestButton = $('.request');
+ 
+ 
+ const requestDelay = 1 // in minute
+ 
+  const requestVerificationMail = token => {
+    load(true);
+    
+    if(!token){
+      alert("please login", false)
+      setTimeout(() => navigate("login.html"), 500)
+      return
+    }
+    
+    fetch(`http://localhost:8080/api/user/request/verify`, {
+      headers: {
+        token
+      }
+    })
+    .then(res => res.json())
+    .then(status => {
+       console.log(status)
+       if(status.sent){
+         alert("verification link sent succefully");
+         let countDown = 60 * requestDelay;
+         let timer;
+         
+         RequestButton.classList.remove("active")
+         RequestButton.classList.add("inactive");
+         timer = setInterval(() => {
+           countDown--;
+           if(countDown < 0){
+             clearInterval(timer);
+             RequestButton.classList.add("active")
+             RequestButton.classList.remove("inactive");
+             RequestButton.textContent = "Request Verification Link"
+             return
+           }
+           RequestButton.textContent = `Try After ${countDown} seconds`
+         }, 1000)
+       }else{
+         alert("Fail To Send Verification Link", false)
+       }
+       
+       Email.textContent = status.email;
+    
+    })
+    .catch(er => {
+      console.log(er)
+      alert("Network Error", false)
+    })
+    .finally(() => {
+      load(false)
+    })
+  }
+  
+  
+  requestVerificationMail(token)
+  RequestButton.onclick = () => {
+    if(RequestButton.className.includes("active")){
+      requestVerificationMail(token);
+    }
+  }
+  
+ }
+    
+  </script>
+</body>
+</html>

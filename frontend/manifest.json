@@ -1,0 +1,16 @@
+{
+  "short_name": "Snet Chat",
+  "name": "small & fast chatting app",
+  "icons": [
+    {
+      "src": "./images/logo.png",
+      "type": "img/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/stat.html",
+  "background_color": "",
+  "display": "standalone",
+  "theme_color": "white",
+  "description": "A Small Fast And Secure Chatting Application"
+}

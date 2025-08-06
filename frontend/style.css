@@ -1,0 +1,808 @@
+/* for themes */
+  [data-theme="default"] {
+    --header-height: 60px;
+    --messageBar-head-height: 45px;
+    --messageInput-height: 100px;
+  --bg-color: #154564;
+  --ele-bg: #107BC2;
+ --card-bg: rgba(255,255,255,.3);
+ --border-color: white;
+ --active-bg: #107BC2;
+ --red-bg: #995A5A;
+ --orange-bg: #583C23;
+ --blue-bg: #107BC2;
+ --button-color: black;
+ --button-bg: #7BCBFF;
+ --input-bg: white;
+ --ele-light-bg: #FFFFFFDE;
+ --main-color: white;
+ --appName-color: white;
+ --gray-color: #D1CECE;
+ --count-bg: white;
+ --count-color: black;
+ --button-border: none;
+ --input-color: black;
+ --confirm-color: black;
+ --confirm-bg: #58A5FF;
+ --popup-color: black;
+ --popup-bg: #58A5FF;
+ --bg-image: linear-gradient(130deg, #154564 50%, #107bc2);
+  }
+  
+  
+:root {
+    --bg-color: #121212;
+    --ele-bg: #3A3A3A;
+    --card-bg: #3A3A3A;
+    --border-color: #3B3B3B;
+    --active-bg: #768086;
+    --red-bg: #995A5A;
+    --orange-bg: #583C23;
+    --blue-bg: #124D72;
+    --button-color: white;
+    --button-bg: #656B6E;
+    --input-bg: #1E1E1E;
+    --ele-light-bg: #FFFFFF4D;
+    --input-color: white;
+      --count-color: black;
+  --searchBar-placeholder-color: #ACADB8;
+  --edit-bg: var(--ele-bg);
+  --main-color: white;
+    --bg-image: linear-gradient(130deg, #212121 50%, #2F2F2F);
+  }
+
+
+[data-theme="light"] {
+  --bg-color: #FFFFFF;
+  --main-color: black;
+  --ele-bg: #4A4A4A;
+  --appName-color: #3B3B3B;
+  --card-bg: #8E8E8E;
+  --border-color: #3B3B3B;
+  --active-bg: #888888;
+  --red-bg: #FF4C4C;
+  --orange-bg: #EE9F0A;;
+  --blue-bg: #3B3B3B;
+  --button-color: black;
+  --button-bg: white;
+  --input-bg: #FFFFFF;
+  --ele-light-bg: #0000001A; /* Light transparent black */
+  --gray-color: black;
+  --count-bg: #707070;
+  --count-color: white;
+  --button-border: black;
+  --input-placeholder-color: black;
+  --input-color: black;
+  --input-bg: white;
+  --card-color: white;
+  --bg-image: linear-gradient(130deg, #C0C0C0 50%, #FFFFFF);
+}
+
+
+   * {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+  }
+  
+  *::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, and Opera */
+  }
+ 
+    
+    body{
+      text-transform: capitalize;
+      width: 100vw;
+      height: 100vh;
+      overflow-y: scroll; 
+      margin: 0;
+      color: var(--main-color);
+      background: var(--bg-color);
+      background-image: var(--bg-image);
+      text-transform: capitalize;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    
+    
+
+ input, textarea, select, button{
+  width: 90%;
+  border: none;
+  border-radius: .5rem;
+  background: var(--input-bg);
+  color: var(--input-color);
+  border: 1px solid var(--button-border);
+  padding: 1rem;
+  outline: none;
+}
+
+input::placeholder{
+  color: var(--input-placeholder-color);
+}
+
+ button{
+  border: 1px solid var(--button-border);
+  background: var(--button-bg);
+}
+
+
+
+
+a{
+  text-decoration: none;
+  color: var(--button-color);
+}
+
+img{
+  width: 20px;
+}
+
+  .card {
+   width: 90%;
+   border: none;
+   border-radius: 1rem;
+   background: var(--card-bg);
+   backdrop-filter: blur(5px);
+   padding:.5rem;
+   display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  align-self: center;
+  align-items: center;
+ }
+ 
+
+ 
+  .card label{
+   align-self: flex-start;
+   margin-left: 1rem;
+ }
+ 
+ 
+ .copyright{
+   margin: 1rem;
+ }
+ 
+ 
+ 
+ textarea{
+   width: 80%;
+   font-family: Arial, Helvetica, sans-serif
+ }
+ 
+
+ 
+ .block{
+   border: 1px solid #093048;
+ }
+ 
+ textarea:focus{
+   touch-action: manipulation;
+ }
+
+ .alertBox{
+  background: var(--alertBox-bg);
+  padding: 1rem;
+  border-radius: .5rem;
+  min-width: 80%;
+  max-width: 85%;
+  border: none;
+  position: absolute;
+  top: 1rem;
+  align-self: center;
+  z-index: 10;
+  animation: null .2s 0s forwards linear;
+  transform: scale(0) translateY(-100%)
+}
+
+
+@keyframes showAlert{
+  from{
+    transform: scale(0) translateY(-100%);
+  }
+  to{
+    transform: scale(1) translateY(0%);
+  }
+}
+
+@keyframes hideAlert{
+  from{
+transform: scale(1) translateY(0%);
+}
+  to{
+    transform: scale(0) translateY(-100%);
+  }
+}
+
+.good{
+  background: #56AAFD;
+}
+
+.bad{
+  background: #FD5657;
+}
+
+  .loader{
+   width: 100vw;
+   height: 100vh;
+   position: absolute;
+   background: rgba(0,0,0,0.5);
+   backdrop-filter: blur(5px);
+   z-index: 5;
+   position: absolute;
+   top: 0;
+   display: none;
+   justify-content: center;
+   align-items: center;
+ }
+ 
+ .loader img{
+   animation: load .5s 0s linear infinite;
+   width: 100px;
+ }
+ 
+ @keyframes load{
+   0%{
+     transform: scale(1);
+   }50%{
+     transform: scale(.8);
+   }100%{
+     transform: scale(1);
+   }
+ }
+ 
+  .gray{
+      color: var(--gray-color)
+    }
+    
+    
+    .active{
+      background: var(--active-bg);
+    }
+    
+    
+      .count{
+    min-width: 10px;
+    padding: .3rem;
+    border-radius: 3rem;
+    background: var(--count-bg);
+    color: var(--count-color)!important;
+    text-align: center;
+    place-content: center;
+    font-size: .6rem;
+    font-weight: bold;
+    display: inline-block;
+  }
+    
+    
+      .online {
+    outline: 3px solid #61FFF8;
+  }
+  
+  
+  
+     .clickable:active{
+      animation: click .2s 0s forwards;
+    }
+    
+    @keyframes click{
+      0%{
+        transform: scale(1);
+      }50%{
+        transform: scale(.9);
+      }100%{
+        transform: scale(1);
+      }
+    }
+    
+    
+    #connected {
+      font-size: normal;
+      color: #4ACCFA;
+      animation: shine 1s 0s infinite linear;
+    }
+    
+    @keyframes shine{
+      from{
+        filter: hue-rotate(0deg);
+      }to{
+        filter: hue-rotate(360deg);
+      }
+    }
+    
+    
+    
+    
+    /* this is confirm box */
+  .confirmationWrapper{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.9);
+    display: none /* flex */;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  .confirmBox{
+    width: 70%;
+    border-radius: .5rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;                                                                 justify-content: space-between;
+    align-items: center;
+    background: var(--confirm-bg);
+    z-index: 5;
+    min-height: 22%;
+    color: black;
+    border: 2px solid var(--border-color);
+    text-align: center;
+    row-gap: 1rem;
+    color: var(--confirm-color);
+    flex-shrink: 0;
+  }                                                                                     
+  .confirmBox .title{
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+
+  .confirmBox .message{
+    font-size: 1rem;
+    line-height: 1.2rem;
+  }
+
+  .confirmBox .actions{
+    display: flex;
+    justify-content: space-evenly;
+    width: 90%;
+    align-items: center;
+
+  }
+
+
+  .confirmBox .actions button{
+    width: 40%;
+    background: #01B386;
+    border: none;
+    color: white;
+    padding: .5rem;
+    border-radius: .5rem;
+  }
+
+  .confirmBox .actions .no{
+    background: #F4554A;
+  }
+
+
+.stat{
+ width: 80%;
+ border-radius: .5rem;
+ background: var(--ele-bg);
+ border: none;
+ align-self: center;
+ display: flex;
+ flex-direction: column;
+ color: var(--main-color);
+ font-weight: bold;
+ text-align: left;
+ padding: 1rem;
+ margin: 1rem 0;
+}
+
+.stat canvas{
+  width: 70%;
+  height: 50px;
+}
+
+.stat span{
+  margin: .5rem;
+}
+
+.popup{
+  max-width: 80%;
+  padding: .5rem;
+  background: var(--popup-bg);
+  position: absolute;
+  transform: translateY(100%);
+  bottom: 1rem;
+  color: var(--popup-color);
+  animation: popin .5s 0s forwards;
+  z-index: 50;
+  transform: translateY(100%);
+  align-self: center;
+  border: 1px solid var(--border-color);
+}
+
+@keyframes popin{
+  to{
+    transform: translateY(0%)
+  }
+}
+
+@keyframes popout{
+  to{
+    transform: translateY(100%)
+  }
+}
+
+
+.plashScreen{
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      row-gap: 3rem;
+      z-index: 50
+    }
+    
+    .plashScreen .logo img{
+      width: 200px;
+    }
+    
+    
+    
+    .profileHead{
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      place-content: center;
+      text-align: center;
+      padding: 0!important;
+      font-size: 1.5rem;
+      transform-origin: center;
+      position: relative;
+    }
+    
+    .profileHead .display, .profilePicker .display{
+      width: inherit;
+      height: inherit;
+      border-radius: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .8rem;
+      background: red;
+    }
+    
+    
+    .loading-spinner{
+      display: flex;
+      column-gap: .5rem;
+      align-items: center;
+      margin:.5rem
+    }
+    
+    .spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ccc;
+  border-top: 3px solid var(--bg-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotateZ(360deg); }
+}
+
+
+/* for video  */
+
+ 
+.video {
+  max-width: 95%;
+      max-height: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: black;
+}
+
+
+  
+.video  .heads{  
+  width: 100%;  
+  display: flex;  
+  justify-content: space-around;  
+  align-items: center;  
+  padding: .5rem 0;  
+  background: inherit;  
+}  
+  
+.video .heads .download{  
+  width: 30px  
+}  
+  
+.video  .mediaDisplay{  
+  width: 100%;  
+  height: 100%;
+  display: flex;  
+  flex-direction: column;  
+  align-items: center;  
+  justify-content: center;  
+  position: relative;
+}
+
+.video video{
+width: 100%;
+height: 100%;
+}
+
+.video .controllers {  
+  width: 100%;  
+  display: flex;  
+  top: 40%;  
+  justify-content: center;  
+  align-items: center;  
+}  
+  
+  
+  
+  
+.video  .spinner{  
+  width: 30px;  
+  height: 30px;  
+  background: transparent;  
+  opacity: 1;  
+  z-index: 5;  
+  position: absolute;  
+  display: block;  
+  border: 5px solid white;  
+  border-top: 5px solid gray;  
+  border-radius: 50%;  
+  animation: spin 1s 0s infinite linear  
+}  
+ 
+@keyframes spin{  
+  to{  
+    transform: rotateZ(360deg);  
+  }  
+}  
+  
+.video .playPause{  
+  background: white;  
+  width: 50px;  
+  height: 50px;  
+  border-radius: 50%;  
+  display: none;  
+  padding: .5rem;  
+}  
+  
+.video .feets{  
+  width: 90%;  
+  display: flex;  
+  align-items: center;  
+  margin: 1rem 0;  
+  justify-content: space-around;  
+}  
+
+.video .title, .image .caption{
+  border-bottom: 1.5px solid white;
+  min-width: 60%;
+  text-align: center;
+  overflow: hidden;
+  padding: .3rem;
+}
+  
+
+
+.range{
+-webkit-appearance: none;
+width: 100%;
+height: 3px;
+outline: none;
+border-radius: 0;
+border: none;
+padding: 0;
+border-radius: .5rem;
+margin: 0;
+}
+
+.video .range{
+  width: 80%;
+}
+
+.range::-webkit-slider-thumb {
+-webkit-appearance: none;
+border-radius: 0;
+width: 10px;
+height: 10px;
+cursor: pointer;
+background: white;
+border-radius: .2rem;
+}
+
+.range::-moz-range-thumb {
+border-radius: 0;
+width: 10px;
+height: 20px;
+cursor: pointer;
+background: red;
+border: none;
+}
+
+.range::-ms-thumb {
+border-radius: 0;
+width: 10px;
+height: 20px;
+cursor: pointer;
+background: red;
+}
+
+.video .controlsWrapper{
+width: 100%;
+height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: center;
+z-index: 5;
+position: absolute;
+transition: all .5s .2s;
+}
+
+.video .display, .audio .display{
+  font-size: .7rem;
+  font-weight: bold;
+  overflow-x: scroll;
+}
+
+.video .heads .display{
+  font-size: .9rem;
+}
+
+
+
+    /* for audio */
+    .audio{
+      max-width: 95%;
+      max-height: 95%;
+      padding: .2rem .5rem;
+      display: flex;
+      border-radius: 1rem;
+      row-gap: .2rem;
+      justify-content: center;
+      background-color: rgba(179, 181, 197, 1);
+      flex-direction: column;
+    }
+    
+    .audio .heads, .audio .body, .audio .feets{
+      display: flex;
+      align-items: center;
+      column-gap: .5rem;
+      user-select: none;
+    }
+    
+    .audio .range{
+      max-width: 70%;
+      min-width: 50%;
+    }
+    
+        .audio * {
+       justify-content: space-between;
+     }
+     
+    .audio .display{
+      font-size: .6rem;
+      overflow: hidden;
+    }
+   
+    
+    .audio .playbackController{
+      padding: .2rem;
+      font-size: .6rem;
+      border-radius: 1rem;
+      background: white;
+      text-align: center;
+      font-weight: bold;
+      color: #363636;
+    }
+    .shimmer{
+      background-size: 200% 200%;
+      animation: shimmer 1.5s 0s infinite linear;
+    }
+    
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+
+
+    .file{
+      border-radius: .5rem;
+      background: #9FA2C3;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      row-gap: .3rem;
+      max-width: 100%;
+      max-height: 100%;
+     }
+     
+     .file > *{
+       width: 100%;
+       height: 100%;
+       margin: 0;
+       border-radius: inherit;
+     }
+     
+     .file .title{
+       max-width: 100%;
+       max-height: 100%;
+       text-align: center;
+       overflow-x: scroll;
+       font-weight: bold;
+     }
+     
+     .file .filePoster{
+       align-self: center;
+       width: 80%;
+       height: 80%;
+     }
+    
+    .file .download{
+      width: 30px;
+    }
+    
+    
+    .image{
+      max-width: 95%;
+max-height: 95%;
+      border-radius: .5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      flex-direction: column;
+    }
+    
+    .image img{
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .image .caption{
+      background: #42445A;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      border-top-left-radius: inherit;
+      border-top-right-radius: inherit;
+      text-align: center;
+      border: none;
+      padding: .5rem 0;
+      font-size: .8rem;
+      opacity: 0;
+    }
+    
+    .image *{
+      transition: opacity .2s 0s linear;
+      pointer-events: none;
+      user-select: none;
+    }

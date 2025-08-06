@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Download</title>
+  <script src="appMaker.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+  <style>
+    body {
+         text-align: center;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      row-gap: 1rem;
+      justify-content: center;
+    }
+    
+    button{
+      margin: 1rem;
+    }
+  
+  </style>
+</head>
+<body>
+  <h1>Download Page</h1>
+  <div id="already-installed" style="display: none;">
+    <p>You are already using the app!</p>
+  </div>
+  
+ 
+  <div id="download-section">
+    <p>
+     the snet mobile application have two versions, we have the v1 
+     and the current version ,
+     to install the latest version, click on show pop up, this will show install bar at top of your browser 
+     if your browser doesnt support the current version installation, you can download the v1
+     it will update itself
+    </p>
+    <button class="clickable" id="install-btn">Show Pop Bar</button>
+    <button class="clickable download">Download App v1</button>
+  </div>
+
+  <script src="main.js"></script>
+  <script>
+    // Check if app is already installed
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      $('#already-installed').style.display = 'block';
+      $('#download-section').style.display = 'none';
+    }
+
+    // Add event listener to install button
+    $('#install-btn').addEventListener('click', () => {
+      // Check if browser supports PWA installation
+      if ('serviceWorker' in navigator && 'BeforeInstallPromptEvent' in window) {
+        // Trigger PWA installation prompt
+        window.addEventListener('beforeinstallprompt', (event) => {
+          event.prompt();
+          event.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('User accepted the install prompt');
+            } else {
+              console.log('User dismissed the install prompt');
+            }
+          });
+        });
+      } else {
+        console.log('PWA installation not supported');
+      }
+    });
+    
+    $(".download").onclick = () => {
+      const a = createEle("a", {
+        "href": "/app.apk",
+        "download": "Snet V1 App"
+      });
+      a.click()
+    }
+    
+  </script>
+</body>
+</html>

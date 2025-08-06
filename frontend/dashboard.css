@@ -1,0 +1,1150 @@
+/* main head */
+
+[data-theme="default"] {
+    --header-height: 60px;
+    --messageBar-head-height: 45px;
+    --messageInput-height: 100px;
+ --message-sent-bg: #17537A;
+ --message-received-bg: #2881BA;
+ --chat-head-bg: #081F2E;
+ --replyBox-border: #0A3959;
+ --red-bg: #995A5A;
+ --orange-bg: #583C23;
+ --copy-bg: #124D72;
+ --blue-bg: #107BC2;
+ --bars-bg: #0E354E;
+ --button-color: white;
+ --sorters-bg: transparent;
+ --replyBox-bg: #195E8A;
+ --typeArea-bg: #081F2E;
+ --typeInput-bg: #0A2D43;
+ --searchBar-bg: #155683;
+ --gray-color: #D1CECE;
+ --count-bg: white;
+ --count-color: black;
+ --searchBar-color: white;
+ --input-color: black;
+ --searchBar-placeholder-color: #ACADB8;
+ --edit-bg: var(--ele-bg);
+  }
+  
+:root {
+  --bg-color: #121212;
+  --ele-bg: #3A3A3A;
+  --message-sent-bg: #2C2C2C;
+  --message-received-bg: #787878;
+  --card-bg: #3A3A3A;
+  --chat-head-bg: #1E1E1E;
+  --border-color: #3B3B3B;
+  --replyBox-bg: #3A3A3A;
+  --active-bg: #768086;
+  --replyBox-border: #768086;
+  --red-bg: #995A5A;
+  --orange-bg: #583C23;
+  --copy-bg: #124D72;
+  --blue-bg: #124D72;
+  --button-color: white;
+  --button-bg: #656B6E;
+  --input-bg: #1E1E1E;
+  --ele-light-bg: #FFFFFF4D;
+  --sorters-bg: #3A3A3A;
+  --bars-bg: #121212;
+  --typeArea-bg: #1E1E1E;
+  --typeInput-bg: #3A3A3A;
+  --searchBar-bg: #3A3A3A;
+  --input-color: white;
+  --searchBar-color: white;
+  --confirm-bg: #121212;
+  --confirm-color: white;
+  --popup-bg: #3A3A3A;
+  --popup-color: white;
+  --count-bg: white;
+  --main-color: white;
+
+  /* ✅ Added from [data-theme="default"] */
+  --header-height: 60px;
+  --messageBar-head-height: 45px;
+  --messageInput-height: 100px;
+  --count-color: black;
+  --searchBar-placeholder-color: #ACADB8;
+  --edit-bg: var(--ele-bg);
+}
+
+[data-theme="light"] {
+  --bg-color: #FFFFFF;
+  --main-color: black;
+  --ele-bg: #4A4A4A;
+  --appName-color: #3B3B3B;
+  --message-sent-bg: white;
+  --message-received-bg: #F1F1F1;
+  --card-bg: #8E8E8E;
+  --chat-head-bg: #8E8E8E;
+  --border-color: #3B3B3B;
+  --replyBox-bg: #A2A2A2;
+  --active-bg: #888888;
+  --replyBox-border: #3C3C3C;
+  --red-bg: #FF4C4C;
+  --orange-bg: #EE9F0A;
+  --copy-bg: #FFFFFF;
+  --blue-bg: #D6D6D6;
+  --button-color: black;
+  --button-bg: white;
+  --input-bg: #FFFFFF;
+  --ele-light-bg: #0000001A; /* Light transparent black */
+  --sorters-bg: #919191;
+  --bars-bg: #DADADA;
+  --typeArea-bg: white;
+  --typeInput-bg: #D0D7DD;
+  --searchBar-bg: white;
+  --searchBar-color: black;
+  --gray-color: black;
+  --count-bg: #707070;
+  --count-color: white;
+  --button-border: black;
+  --input-placeholder-color: black;
+  --input-color: black;
+  --input-bg: white;
+  --profileHead-color: white;
+  --card-color: white;
+  --edit-bg: #D6D6D6;
+  --popup-bg: white;
+  --popup-color: black;
+  --confirm-bg: white;
+  --confirm-color: black
+}
+
+
+    body, html{
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-color);
+      overflow: hidden;
+      user-select: none;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    
+
+
+    
+    header{
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+      height: var(--header-height);
+    }
+    
+     header *{
+       margin: .5rem;
+     }
+    
+    header .name{
+     color: var(--appName-color);
+      font-weight: bold;
+      font-size: 2rem;
+    }
+    
+    .navs{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    header nav{
+      width: 30px;
+      background: var(--ele-bg);
+      border-radius: 50%;
+      padding: .2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    header nav img{
+      transform: scale(1.2);
+    }
+    
+    header .add:active{
+      animation: click .2s 0s forwards;
+    }
+    
+    main{
+      width: 100%;
+      overflow: hidden;
+    }
+    
+   
+    
+    
+    /* nav bar */
+    
+    .navBar{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      row-gap: .5rem
+      }
+      
+      .navBar *{
+        flex-shrink: 0;
+      }
+    
+    .search{
+      background: var(--searchBar-bg)!important;
+      border-radius: 3rem;
+      font-size: .9rem;
+      color: var(--searchBar-color);
+      width: 93%;
+      padding: 1rem;
+    }
+    
+    
+    .search::placeholder{
+      color: var(--input-placeholder-color);
+    }
+    
+    .sorters{
+      width: 90%;
+      display: flex;
+      align-items: center;
+      column-gap: .5rem;
+      overflow-x: scroll;
+      height: max-content;
+    }
+    
+    .sorter{
+      flex-shrink: 0;
+      display: flex;
+      min-width: min-content;
+      border: .3px solid var(--border-color);
+      border-radius: 1rem;
+      padding: .4rem .5rem;
+      font-size: .7rem;
+      column-gap: .2rem;
+      color: var(--main-color);
+      font-weight: bold;
+      align-items: center;
+    }
+    
+    .sorter .count{
+      padding: .2rem;
+    }
+    
+    
+    
+    .chatNavs{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 10rem;
+      overflow-y: scroll;
+      height: 70%;
+      color: var(--main-color);
+   
+    }
+    
+    .chatNav{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      column-gap: .5rem;
+      transform: translateY(10%);
+      padding: .5rem 0;
+      animation: popMessage .2s 0s forwards
+    }
+    
+
+    
+    .chatNav .count{
+      transform: scale(.9);
+    }
+    
+     
+    
+    .chatNav .profileHead{
+      width: 50px;
+      height: 50px;
+      background: var(--ele-bg);
+      color: var(--profileHead-color)!important;
+    }
+    
+    .chatNav .profileHead *{
+      pointer-events: none;
+    }
+  
+    
+    .chatNav .body{
+      width: 75%;
+      height: 75%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    
+    .chatNav .body .head{
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: space-between;
+    }
+    
+    .chatNav .body .head .name{
+      font-weight: bold;
+    }
+    
+    .chatNav .body .head .time{
+      font-size: .7rem;
+    }
+    
+    .chatNav .body .feet{
+      display: flex;
+      font-size: .8rem;
+      color: white;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .chatNav .feet .message{
+      min-width: 90%;
+    }
+    
+
+    .bar{
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      position: fixed;
+      opacity: 1;
+      z-index: -1;
+      pointer-events: visiblePainted;
+      color: var(--main-color);
+      background: var(--bars-bg);
+    }
+    
+   .messageBar, .groupSetting, .peoplesBar > .wrapper, .setting, .addBar{
+      background: var(--bars-bg)!important
+    }
+ 
+
+   .navBar{
+     position: relative;
+     background: transparent;
+   }
+   
+   
+   /* messages bar */
+      .messageBar{
+     background: var(--bg-color);
+     z-index: 5;
+     height: 100%;
+    }
+    
+    
+    
+    .messageBar .head{
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      column-gap: 1rem;
+      background: var(--chat-head-bg);
+      padding: .5rem 0;
+      height: var(--messageBar-head-height)
+    }
+    
+    .messageBar .profileHead{
+      width: 40px;
+      height: 40px;
+      margin-left: .2rem;
+      background: var(--ele-bg);
+      color: var(--profileHead-color)!important;
+    }
+    
+    .messageBar .head .body{
+      display: flex;
+      flex-direction: column;
+      row-gap: .2rem;
+      width: 50%;
+    }
+    
+    .messageBar .head .users{
+      font-size: .8rem;
+      min-width: 50%;
+      max-width: 100%;
+    }
+    
+    .messageBar .head marquee{
+      width: 100%;
+      position: relative;
+    }
+    
+    .messageBar .head button{
+      font-weight: bold;
+      padding: .5rem;
+      width: 80px
+    }
+    
+    .messageBar .messages{
+      padding-top:.5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      row-gap: .5rem;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      height: calc(100% - var(--messageBar-head-height) - var(--messageInput-height));
+    }
+    
+    .messageBar .messages .message{
+      max-width: 70%;
+      min-width: 30%;
+      text-align: left;
+      padding: .5rem;
+      transform-origin: left;
+      position: relative;
+      margin: .5rem;
+      border-radius: 1rem;
+      display: flex;
+      flex-direction: column;
+      row-gap: .5rem;
+      color: var(--main-color);
+      transform: translateY(10%);
+      animation: popMessage .1s 0s forwards;
+    }
+    
+    @keyframes popMessage{
+      to{
+        transform: translateY(0%);
+      }
+    }
+    
+    
+    
+    @keyframes highlight {
+      0%{
+        background: rgba(120, 244, 255, 1);
+        color: normal;
+      }50%{
+        background: rgba(120, 244, 255, .5)
+      }100%{
+        background: normal;
+        color: normal;
+      }
+    }
+   
+    
+    .messageBar .message .content{
+      color: var(--main-color);
+      font-size: .9rem;
+    }
+    
+    
+    
+    .messageBar .system{
+      align-self: center;
+      background: transparent;
+      padding: .5rem;
+      max-width: 90%;
+      color: var(--main-color);
+      font-size: .8rem;
+      
+    }
+    
+    
+    .messageBar .messages .sent{
+      background: var(--message-sent-bg);
+      align-self: flex-end;
+    }
+    
+  .messageBar .messages .received {
+    background: var(--message-received-bg);
+    align-self: flex-start;
+  }
+  
+
+  
+  .messageBar .messages .received .content{
+    color: var(--main-color);
+  }
+  
+  .messageBar .message .foot{
+    display: flex;
+    font-size: .7rem;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%
+  }
+  
+  .messageBar .message .foot .action{
+    color: #FF8234;
+    font-size: .6rem;
+    font-weight: bold;
+  }
+    
+   
+    
+    .messageBar .message .name{
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    
+    .messageBar .deleted{
+      filter: grayscale(30%);
+      opacity: .7;
+    }
+    
+    .messageBar .deleted .replyBox{
+      display: none;
+    }
+    
+    .messageBar .messageInput{
+      display: flex;
+      align-items: flex-end;
+      position: absolute;
+      bottom: .1rem;
+      width: 100%;
+      justify-content: center;
+      height: var(--messageInput-height)
+    }
+    
+.messageInput > *{
+  margin: .5rem .5rem;
+}
+    
+    .messageBar .messageInput .typeArea{
+      width: 70%;
+      display: flex;
+      flex-direction: column;
+      background: var(--typeArea-bg);
+      border-radius: 1rem;
+      padding: .5rem;
+      row-gap: 1rem
+    }
+    
+    .messageInput .typeArea textarea, .messageInput canvas{
+      width: 95%;
+      padding: 0;
+      background: var(--typeInput-bg);
+      padding: .2rem;
+      color: var(--main-color);
+      font-size: 1rem;
+      display: none;
+    }
+    
+    .messageInput .replyBox{
+      display: none;
+      color: var(--main-color);
+      border-left: 5px solid var(--replyBox-border);
+    }
+    
+    .messageInput .replyBox .head{
+      background: none
+    }
+    
+    
+    .messageInput .action{
+      width: 50px;
+      height: 50px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-self: flex-end;
+      margin-bottom: 1rem;
+      user-select: none!important
+    }
+    
+    .messageInput .action:active{
+      transform: scale(1.2);
+    }
+    
+    .messageInput .action *{
+      user-select: none!important
+    }
+    
+    
+    /* peoples bar */ 
+    
+ 
+    .messageInput .action img{
+      filter: invert(100%);
+      transform: scale(1.5);
+      user-select: none!important
+    }
+    
+    .messageInput canvas, .messageInput textarea{
+      display: none;
+    }
+    
+
+    
+    
+    /* peoples bar */ 
+    
+    .peoplesBar, .groupSetting{
+      top: 0;
+      align-items: center;
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      overflow-y: scroll;
+      padding-bottom: 5rem;
+    }
+    
+    .peoplesBar .wrapper{
+      width: 100%;
+      flex-direction: column;
+      background: var(--bg-color);
+      align-items: center;
+      display: flex;
+      padding-bottom: 2rem
+    }
+    
+    .peoplesBar .wrapper .search{
+      margin-bottom: 1.5rem;
+      margin-top: 2rem;
+      width: 80%;
+      background: var(--input-bg);
+    }
+    
+    .peoplesBar .head, .groupSetting .head{
+      width: 90%;
+      display: inherit;
+      flex-direction: inherit;
+      row-gap: 1rem;
+      align-items: center;
+      margin-top: 1rem;
+    }
+    
+.peoplesBar .head .copy, .groupSetting .head .copy{
+  width: max-content;
+  padding: .5rem;
+  font-weight: bold;
+  align-self: center;
+}
+    
+    .peoplesBar .head .profileHead, .groupSetting .head .profileHead{
+      font-size: 2rem;
+      width: 90px;
+      height: 90px;
+      background: var(--ele-bg);
+      color: var(--profileHead-color)!important;
+    }
+    
+    .peoplesBar .head .peoplesCount, .groupSetting .head .peoplesCount{
+      font-size: 1rem;
+    }
+    
+    .peoplesBar .head .name, .groupSetting .head .name{
+      font-size: 1.5rem;
+    }
+    
+    .peoplesBar  .head .detail, .groupSetting .head .detail{
+      text-transform: lowercase;
+      margin: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      row-gap: 1rem;
+      align-self: flex-start;
+    }
+    
+    .peoplesBar .peoples{
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      row-gap: 1rem;
+      overflow-y: scroll;
+      min-height: 200px;
+      max-height: 500px;
+      align-items: center;
+      margin-bottom: 1rem;
+      align-self: center;
+    }
+    
+    .peoplesBar .person{
+      display: flex;
+      width: 98%;
+      column-gap: .8rem;
+      align-items: center;
+    }
+    
+    .peoplesBar .profileHead{
+      display: block;
+      font-size: 1rem;
+      width: 40px;
+      height: 40px;
+      background: var(--ele-bg);
+      color: var(--profileHead-color)!important;
+    }
+    
+    .peoplesBar .info{
+      height: 100%;
+      width: 90%;
+    }
+    
+    .peoplesBar .person .head,.peoplesBar .person .body{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: .2rem;
+      width: 100%;
+    }
+    
+    .peoplesBar .person button{
+      padding: .5rem;
+      width: 80px;
+    }
+    
+    .peoplesBar .person .head .name{
+      font-size: 1rem;
+    }
+    
+    .peoplesBar .person .head .role{
+      font-size: .7rem;
+    }
+    
+    .peoplesBar .person .bio{
+      font-size: .9rem;
+      text-transform: lowercase;
+    }
+    
+   
+   /* default */
+    .messageBar,.peoplesBar{
+      display: none;
+    }
+    
+  /* add bar */
+  .addBar{
+    background: var(--bg-color);
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    row-gap: 1rem;
+    overflow-y: scroll;
+  }
+  
+  .addBar .navs{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 3rem 0;
+  }
+  
+  .addBar .nav{
+    width: 40%;
+    padding: .5rem;
+    transition: all .2s 0s;
+  }
+  
+  .addBar  .active{
+    background: var(--active-bg);
+    color: var(--main-color);
+  }
+  
+ .addBar .nav:active{
+   background: var(--active-bg);
+ }
+ 
+.addBar .card{
+  min-height: min-content;
+}
+ 
+.addBar .card .form{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  align-items: center;
+}
+
+
+
+ .addBar .card .form {
+   display: none;
+ }
+ 
+ .addBar .card .create {
+   display: flex;
+ }
+ 
+ 
+ .loading{
+   opacity: .5!important
+ }
+  
+
+
+    
+    /* reply boxes and other main element */
+     .replyBox{
+      border-left: 4px solid var(--replyBox-border);
+      border-radius: .5rem;
+      padding: 0 .5rem;
+      display: flex;
+      background: var(--replyBox-bg);
+      flex-direction: column;
+      row-gap: .3rem;
+    }
+    
+    
+    
+    .received .replyBox {
+      border-color: var(--border-color);
+    }
+    
+    .replyBox .name{
+      font-weight: bold;
+    }
+    
+    .replyBox .content{
+      font-size: .8rem!important;
+      color: var(--main-color)
+    }
+    
+    
+        
+    .replyBox .head{
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      height: 20px;
+    }
+    
+    .replyBox .head .cancel{
+      border-radius: 50%;
+      min-width: 20px;
+      max-width: max-content;
+     text-align: center;
+     place-content: center;
+     padding: .3rem;
+     display: inline-block;
+     font-size: .5rem;
+    }
+    
+        
+    .messageBar .actionBar{
+      display: none;
+      background: rgba(0,0,0,.2);
+      backdrop-filter: blur(10px);
+      position: absolute;
+      height: 60px;
+      z-index: 10;
+      width: 100%;
+      align-items: center;
+      justify-content: space-around;
+     }
+    
+  
+    
+    .messageBar .actionBar button{
+      padding: .5rem;
+      background: var(--ele-bg);
+      width: 20%;
+      height: 70%;
+      font-weight: bold;
+      color: var(--main-color);
+    }
+    
+    .messageBar .actionBar .edit{
+      background: var(--edit-bg);
+    }
+    
+    .messageBar .actionBar .delete{
+      background: var(--orange-bg);
+    }
+    
+    .messageBar .actionBar .block{
+      background: var(--red-bg)
+    }
+    
+    .messageBar .actionBar .copy{
+      background: var(--copy-bg);
+    }
+    
+    /* for chat setting */ 
+    .groupSetting {
+      row-gap: 2rem;
+      overflow-y: scroll;
+      position: absolute;
+      display: none;
+    }
+    
+    .groupSetting .save, .peoplesBar .settingBtn{
+      padding: .7rem;
+      width: 90%;
+      margin-top: 2rem;
+      font-weight: bold;
+      background: var(--button-bg);
+    }
+    
+    .setting .action{
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .setting .action > *{
+      width: 40%;
+      padding: .7rem;
+      margin-top: 2rem;
+      font-weight: bold;
+      color: var(--button-color)!important;
+      border: 1px solid var(--button-border);
+    }
+    
+    .setting .action .reset{
+      background: var(--red-bg);
+    }
+    
+    .groupSetting h2{
+      margin: .5rem;
+    }
+    
+    
+    
+    
+    footer .navs{
+      position: fixed;
+      bottom: 0;
+      height: 50px;
+      z-index: 10;
+      width: 100%;
+      justify-content: space-evenly;
+    }
+    
+    footer nav{
+      border-radius: 3rem;
+      padding: .5rem 1.5rem;
+      place-content: center;
+      place-items: center;
+      background: var(--blue-bg);
+      box-shadow: 1px 1px 5px rgba(0,0,0,.5);
+    }
+    
+    footer nav img{
+      transform: scale(1.5);
+    }
+    
+   
+    .new{
+      color: white;
+    }
+    
+  
+    .chatSearchBar{
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      align-items: center;
+    }
+    
+    .chatSearchBar .search{
+      margin: 1rem 0;
+      margin-top: 0;
+      width: 90%;
+      position: relative;
+    }
+    
+    .chatSearchBar .head{
+      display: flex;
+      width: 90%;
+      font-weight: bold;
+      justify-content: space-between;
+    }
+    
+    .chatSearchBar .display{
+      width: 100%;
+      overflow-y: scroll;
+      max-height: 70%;
+    }
+    
+    .chatSearchBar .chatNav{
+      width: 100%;
+      position: relative;
+     }
+     
+     .chatNav .body:active, .chatNav:active{
+       background: var(--active-bg);
+     }
+    
+    .chatSearchBar .chatNav .body{
+      row-gap: .3rem
+    }
+    
+    
+    .chatSearchBar .chatNav .feet{
+      width: 85%;
+    }
+    
+    .chatSearchBar .chatNav .join{
+      padding: .2rem .5rem;
+      font-size: .6rem;
+      font-weight: bold;
+    }
+    
+    .chatSearchBar .chatNav .display{
+      row-gap: .5rem
+    }
+    
+    .chatSearchBar .chatNav .type{
+      font-size: .7rem;
+    }
+
+.chatSearchBar h2{
+  margin: 0
+}
+    
+.typing_indicator{
+  font-size: .8rem;
+  color: white;
+  font-weight: bold;
+}
+
+/* for setting */
+
+.setting{
+  align-items: center;
+  align-self: center;
+  width: 100%;
+  height: 100%;
+  row-gap: 1rem;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+   .save{
+     background: var(--active-bg);
+   }
+    
+   .red{
+     background: var(--red-bg);
+     margin: 2rem;
+     color: white;
+     font-size: 1rem;
+     font-weight: bold;
+   }
+   
+   .setting .static{
+     display: flex;
+     flex-direction: column;
+     row-gap: 1rem;
+     text-align: center;
+   }
+   
+   .setting .static img{
+     width: 100px;
+     border-radius: 50%;
+   }
+   
+   .setting .static .verified{
+     border: 2px solid lightgreen;
+   }
+   
+   .blocked{
+     color: red;
+     font-size: .8rem;
+   }
+   
+   .unblockMessage{
+     display: flex;
+     width: 100%;
+     justify-content: space-evenly;
+     align-items: center;
+     font-weight: bold;
+   }
+   
+   .unblockMessage button{
+     padding: .5rem;
+     width: min-content
+   }
+   
+   /* for impirted items color */
+.profileHead .display{
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  transform: inherit;
+  background: inherit
+}
+
+.isOnline {
+  background: var(--count-bg)!important;
+  position: absolute;
+  width: 20%;
+  height: 20%;
+  border-radius: 50%;
+  z-index: 50;
+  right: -10%;
+  bottom: -10%;
+}
+
+.attachBar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: .5rem
+}
+
+
+
+.attachBar .counter{
+  align-self: flex-start;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: .5rem 1rem;
+  display: flex;
+  column-gap: 1rem;
+}
+
+    .attachBar .files{
+      display: grid;
+      width: 95%;
+      height: 80%;
+      overflow-y: scroll;
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: minmax(200px, 250px);
+      column-gap: .5rem;
+      row-gap: 1rem
+    }
+    
+    .attachBar  > *{
+      overflow: hidden;
+    }
+    
+.attachBar .video .playPause{
+ width: 20px;
+ height: 20px;
+}
+
+.attachBar .video .title, .attachBar .video .caption , .attachBar .video .feets .display{
+  font-size: .6rem!important
+}
+   
+
+.attachBar .actions{
+  display: flex;
+  width: 90%;
+  column-gap: .5rem;
+}
+
+.attachBar .guider{
+  font-size: .7rem;
+  color: var(--gray-color);
+  width: 90%;
+  text-align: left;
+}
+
+
+.attachBar .actions .done{
+  background: #246C3A
+}

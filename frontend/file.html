@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+  <style>
+  
+  body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+    
+    .wrapper{
+      display: grid;
+      width: 95%;
+      margin-top: 1rem;
+      height: 100vh;
+      overflow-y: scroll;
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: minmax(200px, 250px);
+      column-gap: .5rem;
+      row-gap: 1rem
+    }
+    
+    .wrapper  > *{
+      overflow: hidden;
+      
+    }
+    
+    
+  </style>
+</head>
+<body>
+  
+  
+  <div class="wrapper"></div>
+  
+  
+  <script src="component.js"></script>
+  <script src="main.js"></script>
+<script>
+
+  $(".wrapper").append(
+   File({
+     fileType: "audio",
+     type: "box",
+     src: "./audio/sample.mp3"
+   }),
+   File({
+     fileType: "video",
+     controls: false
+   }),
+   File({
+     fileType: "raw",
+     src: "demo.html"
+   }),
+   File({
+     fileType: "image",
+     maxTries: true
+   }),
+   File({
+     fileType: "image",
+     maxTries: true
+   }),File({
+     fileType: "image",
+     maxTries: true
+   }),File({
+     fileType: "image",
+     maxTries: true
+   }),File({
+     fileType: "image",
+     maxTries: true
+   }),File({
+     fileType: "image",
+     maxTries: true
+   }),File({
+     fileType: "image",
+     maxTries: true
+   }),
+   )
+   
+  
+ 
+</script>
+</body>
+</html>

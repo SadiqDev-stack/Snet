@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Register</title>
+    <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="dashboard.css" />
+    <script src="countries.js"></script>
+    <style>
+      body,
+      html {
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+      }
+
+      textarea {
+        height: 50px;
+      }
+
+      .card {
+        overflow-y: scroll;
+      }
+
+      .card * {
+        flex-shrink: 0;
+      }
+
+
+
+
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>Register</h2>
+      <div class="picker"></div>
+      <input placeholder="Enter Your Full Name" type="text" />
+      <input placeholder="Enter Your Email" type="email" />
+      <input placeholder="Enter Your Phone Eg 08145742404" type="number" />
+      <select class="countries" name="" id="">
+        <option selected value="">Select Your City</option>
+      </select>
+      <select name="" id="">
+        <option selected value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+      <input placeholder="Enter Your Password" type="password" />
+      <textarea
+        rows="5"
+        placeholder="Little Precise Bio About Yourself"
+        type="text"
+      ></textarea>
+      <label for="">
+        Already Have An Account?,
+        <a href="login.html"> Login</a>
+      </label>
+      <button class="register">Register Account</button>
+    </div>
+
+    <script src="axios.js"></script>
+    <script src="main.js"></script>
+    <script src="component.js"></script>
+    <script>
+      const [,, Name, Email, Phone, CountrySelect, GenderSelect, Password, Bio, , RegisterBtn] =
+        $("*.card > *");
+
+      const regData = {
+        name: "",
+        email: "",
+        country: "",
+        password: "",
+        bio: "",
+        phone: "",
+        gender: "male"
+      };
+
+      onInput(Name, value => {
+        regData.name = value.trim();
+        if (!regData.profilePic) {
+          picker.querySelector(".display").innerHTML = profileHeadName(value);
+        }
+      });
+
+      onInput(Phone, value => {
+        regData.phone = value.trim();
+      });
+
+      onChange(GenderSelect, value => {
+        regData.gender = value;
+      });
+
+      onInput(Email, value => {
+        regData.email = value.trim();
+      });
+
+      onInput(Password, value => {
+        regData.password = value.trim();
+      });
+
+      onInput(Bio, value => {
+        regData.bio = value.trim();
+      });
+
+      // File picker
+      let profilePic = "";
+      const picker = ProfilePickerComp("", "🚫");
+      $(".picker").replaceWith(picker);
+      picker.onchange = file => {
+        profilePic = file.file;
+      };
+
+      // Load countries
+      load(true);
+      const select = Countries(countries, value => {
+        regData.country = value;
+      });
+      CountrySelect.replaceWith(select);
+      load(false);
+
+      const valid = ({ email, password, bio, name, country, phone }) => {
+        let valid = false;
+        if (name.length < minLength) {
+          alert("empty or short name..", false);
+        } else if (!email.includes("@gmail.com") || email.length < minLength) {
+          alert("empty or invalid email", false);
+        } else if (regData.phone < 11) {
+          alert("empty or short phone number", false);
+        } else if (!country) {
+          alert("please select your country", false);
+        } else if (password.length < minLength) {
+          alert("empty or short password ...", false);
+        } else if (bio.length < minLength) {
+          alert("empty or short biography", false);
+        } else {
+          valid = true;
+        }
+        return valid;
+      };
+
+      RegisterBtn.onclick = () => {
+        if (valid(regData)) {
+          load(true);
+          const formData = new FormData();
+          formData.append("regData", JSON.stringify(regData));
+          if (profilePic) {
+            formData.append("profilePic", profilePic);
+          }
+
+          axios.post("http://localhost:8080/api/user/register", formData)
+            .then(res => {
+              const user = res.data;
+              if (user.registered) {
+                alert("Registration Successful");
+                setData("userData", user.data);
+                navigate("verify.html");
+              } else {
+                alert(user.message, false);
+              }
+            })
+            .catch(err => {
+              console.log(err);
+              alert("Network Error", false);
+            })
+            .finally(() => load(false));
+        }
+      };
+    </script>
+  </body>
+</html>

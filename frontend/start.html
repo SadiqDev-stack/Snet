@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Home</title>
+  <script src="protect.js" type="text/javascript" charset="utf-8"></script>
+  <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+  <style>
+    
+    .plashScreen{
+      display: flex;
+    }
+    
+    
+  </style>
+</head>
+<body>
+  
+    <div class="plashScreen">
+    <div class="logo">
+      <img src="./images/logo.png" alt="">
+    </div>
+    <div class="dev ">
+      Developed By Sadiq
+    </div>
+    <div class="loading ">loading ..</div>
+  </div>
+  
+  <script src="main.js"></script>
+  <script>
+  
+  
+  function decodeJWT(token, cb) {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const decodedData = JSON.parse(atob(base64));
+    cb(decodedData)
+  } catch (error) {
+    console.error('Error decoding JWT:', error);
+    cb(false)
+  }
+}
+
+decodeJWT(token, data => {
+  if(data){
+   // navigate(`${data.role}_dashboard.html`)
+  }
+})
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="dashboard.css" type="text/css" media="all" />
+ <style>
+   
+   .isOnline{
+     background: white;
+     border-radius: 50%;
+     position: absolute;
+     right: -5%;
+     bottom: -5%;
+     font-weight: bold;
+     font-size: .7rem;
+     min-width: 15px;
+     min-height: 15px;
+     background: #A7DEFF;
+   }
+ </style>
+</head>
+<body>
+  <div class="plashScreen">
+    <div class="logo">
+    <img src="./images/logo.png" alt="">
+    </div>
+      <div class="dev ">
+        Developed By Sadiq
+      </div>
+    <div class="loading ">loading ..</div>
+  </div>
+  
+  <!-- header -->
+  <header>
+    <div class="name">
+      S'net
+    </div>
+   <div class="navs">
+     
+    <nav class="add clickable">
+     <img src="./images/add.png" alt="">
+     </nav>
+     <nav>
+       <img src="./images/setting.png" alt="">
+     </nav>
+     <nav>
+       <img src="./images/groups.png" alt="">
+     </nav>
+   </div>
+  </header>
+  
+  <!-- main -->
+  <main>
+    <!-- navigation bar -->
+    <div class="bar navBar" forName="navBar">
+    <!-- search bar -->
+    <input placeholder="Type Or Search chats .." type="search" class="search ">
+    <!-- sorters -->
+    <div class="sorters">
+      <div class="sorter active">
+        <div class="name">All</div>
+        <div class="count">0</div>
+      </div>
+      <div class="sorter">
+        <div class="name">Unread</div>
+        <div class="count">10</div>
+      </div>
+    </div>
+    
+    <!-- messageting navs -->
+    <div class="chatNavs">
+      <!-- message navigators-->
+      <!-- message nav end -->
+    </div>
+    
+    </div>
+    
+    <!-- messages bar -->
+    <div class="messageBar bar">
+      <!-- head -->
+      <div class="head">
+        <div class="profileHead">
+          PCH
+        </div>
+        <div class="body">
+          <div class="name">Programming coders..</div>
+          <div class="users gray">100 online</div>
+        </div>
+        <button class="leave">leave</button>
+        
+        
+      </div>
+      <!-- messages start -->
+      <div class="messages">
+        <!-- end -->
+        <div class="message system">
+          Sadiq Abubakar Joined Message
+        </div>
+        
+      </div>
+      
+      <!-- messages end -->
+      <div class="messageInput">
+        <div class="typeArea">
+        <div class="replyBox">
+          <div class="name">Umar</div>
+          <div class="content gray">
+            ok thx buddy i will checkout.. and make it very very interested...
+          </div>
+        </div>
+        <textarea placeholder="Type your message here..." name="" id="" cols="" rows=""></textarea>
+        </div>
+        <div class="action">
+          <img src="./images/send.png" alt="">
+        </div>
+      </div>
+    </div>
+    
+    <!-- peoples bar -->
+    <div class="peoplesBar bar">
+      
+      <!-- head -->
+      <div class="wrapper">
+      <div class="head">
+        <div class="profileHead">
+          PCH
+        </div>
+        <div class="name">Programming Coders Hub</div>
+        <div class="peoplesCount gray">chat Have 171 Peoples</div>
+        <div class="detail">
+          <div class="description">
+            In this chat we will be sharing content about tech and tech trends we will 
+            be supporting our young upcoming talented guys to bring impact to our ciuntry
+          </div>
+          <div class="time gray">
+            Created On 10/5/2025
+          </div>
+        </div>
+      </div>
+      <h3>Peoples</h3>
+      <!-- members -->
+      <div class="peoples">
+        <!-- people start -->
+        <div class="person">
+          <div class="profileHead">
+            SA
+          </div>
+         <div class="info">
+          <div class="head">
+            <div class="name">Sadiq Abubakar</div>
+            <div class="role gray">Admin</div>
+          </div>
+          <div class="body">
+            <div class="bio gray">Never Say you cant do, take a try ..</div>
+          </div>
+        </div>
+        </div>
+            <div class="person">
+          <div class="profileHead">
+            SA
+          </div>
+         <div class="info">
+          <div class="head">
+            <div class="name">Sadiq Abubakar</div>
+            <div class="role gray">member</div>
+          </div>
+          <div class="body">
+            <div class="bio gray">Never Say you cant do, take a try ..</div>
+          </div>
+        </div>
+        </div>   
+        <!-- peoples end -->
+      </div>
+      </div>
+    </div>
+    
+    <!-- add or join bar -->
+       
+    <div class="addBar bar">
+      <div class="navs">
+        <button for="create" class="nav active clickable">Create Group</button>
+        <button for="join" class="nav clickable">Join Group</button>
+      </div>
+      <div class="card">
+        <div for="create" class="create form">
+          <input class="direct" placeholder="Enter Chat Name" type="text">
+          <textarea class="direct" placeholder="Enter Chat Description"></textarea>
+          <select class="direct" name="" id="">
+            <option value="public">Public (anyone can search and join chat)</option>
+            <option selected value="private">Private (only peoples with chat id can join)</option>
+          </select>
+          <select class="direct" name="" id="">
+            <option value="">
+              <option selected value="true">Message Allowed</option>
+              <option value="false">Message Not Allowed Only You Can Send Message</option>
+            </option>
+          </select>
+          <button class="clickable direct">Create Group</button>
+        </div>
+        <div for="join" class="join form">
+          <input placeholder="Enter Group Id" type="text">
+          <button class="clickable">Join Group</button>
+        </div>
+      </div>
+    </div>
+    
+    
+    <!-- chat setting bar -->
+    <div class="groupSetting bar">
+    </div>
+    
+    <div class="chatSearchBar bar" forName="chats">
+      <h3>Search Public Chats</h3>
+      <input class="search" placeholder="Search Chat By Id Or Name" type="search">
+      <div class="head">
+        <div class="found">found: 10</div>
+      </div>
+      <!-- displays chat displays -->
+      <div class="display">
+       </div>
+    </div>
+    
+
+
+    
+    
+   <div class="setting bar">
+        <h1>Account Settings</h1>
+        <div class="profile"></div>
+        <b class="role"></b>
+  <div class="card" id="basic">
+    <h2>Basic Info</h2>
+    <label>Name</label>
+    <input for="name" placeholder="full name" type="text">
+    <label>City</label>
+    <select for="country" name="country" id="">
+    <option value="">select country name</option>
+    </select>
+    <label >Gender</label>
+    <select for="gender" name="" id="">
+      <option selected value="male">male</option>
+      <option value="female">female</option>
+    </select>
+    <label>Bio</label>
+    <textarea for="bio" placeholder="Bio" type="text"></textarea>
+    <div class="action">
+     <button class="reset clickable">Reset</button>
+    <button class="save clickable">Save Setting</button>
+    </div>
+  </div>
+  
+  <div class="card" id="advance">
+    <h2>Identification Info</h2>
+    <label>Email</label>
+    <input for="email" placeholder="Enter New Email" type="text">
+    <label>Phone</label>
+    <input for="phone" placeholder="Enter New Phone Number" type="number">
+      <div class="action">
+      <button class="reset clickable">Reset</button>
+      <button class="save clickable">Save Setting</button>
+    </div>
+    </div>
+   
+   
+  <button class="red clickable" onclick="navigate('reset.html')" class="save clickable reset">Reset Password</button>
+  <button class="red clickable" onclick="
+    confirmation('You Want To Logout', sured => {
+      if(sured) return logout();
+    })
+  ">Logout</button>
+  
+  <div class="card">
+    <h2>App Setting</h2>
+    <h3>Appearnace Control</h3>
+    <button class="clickable toggleTheme">Toggle Theme (Dark) </button>
+    <label for="">Hue Scale: 20</label>
+   <input value="0" step="20" max="350" type="range">
+    <label for="">message seen character</label>
+    <input value="🌟" type="text" placeholder="custom message seen character">
+    <label for="">Transition Duration: 1</label>
+    <input value="0" step=".2" max="1" type="range">
+    <label for="">Chat Background: Default Theme</label>
+    <img src="./images/theme.png" alt="">
+    <h3>App Behavior</h3>
+    <label for="">New Message Sound</label>
+    <select name="" id="">
+      <option value="wistle">default tunn</option>
+      <option value="boat">boat ⛵ sound</option>
+      <option value="tinn">tinnnn</option>
+    </select>
+    <label for="">On New Message</label>
+    <select name="" id="">
+      <option value="">Auto Scroll</option>
+      <option value="">Show Scroller</option>
+    </select>
+    <label for="">Notification Sound</label>
+    <select name="" id="">
+      <option value="">Default Whistle </option>
+      <option value="">Twit 🐦</option>
+    </select>
+    <hr>
+    <label for="">more settings coming soon ...</label>
+    <div class="action">
+      <button class="reset clickable">Reset</button>
+      <button class="save clickable">Save Setting</button>
+    </div>
+    </div>
+    </div>
+    
+    
+    <div class="bar attachBar">
+      <div class="counter">Attached: 100files</div>
+      <div class="files">
+      </div>
+      
+      <div class="actions">
+        <button class="attach clickable">Attach File</button>
+        <button class="done clickable">Done</button>
+      </div>
+      
+      <div class="guider">
+        Double click to delete file, long press to  add caption
+      </div>
+    </div>
+    
+  </main>
+
+  
+  
+  <!-- footer  sounds and navs-->
+  <footer>
+    <audio src="./sounds/newMessage.mp3"></audio>
+    <audio src="./sounds/notification.mp3"></audio>
+    <audio src="./sounds/sent.mp3"></audio>
+  </footer>
+  
+  
+  
+  <script src="countries.js"></script>
+  <script src="axios.js"></script>
+  <script src="main.js"></script>
+  <script src="socket.io.js"></script>
+  <script src="component.js"></script>
+ 
+  
+
+  <script>
+  
+    /*  
+   if(!token){
+     navigate("login.html")
+   }
+*/
+   
+   /* making helpers and component */
+
+  /* selecting main element */ 
+    const PlashScreen = $('.plashScreen')
+    const [AppName, Navs] = $('*header *')
+    const Bars = $('*.bar');
+    const [NavBar, MessageBar, PeoplesBar, GroupsBar, GroupSettingsBar, ChatsSearchBar, SettingsBar, AttachBar] = Bars;
+    const [SearchInput, Sorters, ChatNavs] = $('*.navBar > *')
+    const [MessageBarHead, MessagesBox] = MessageBar.querySelectorAll("* > *")
+    const MessagesInput = $('.messagesBoxComp')
+    const [PeoplesBarHead, PeoplesBarPeoples] = PeoplesBar.querySelectorAll("* > .wrapper *")
+    const GroupsBarNavs = GroupsBar.querySelectorAll(".nav")
+    const GroupsBarForms = GroupsBar.querySelectorAll(".form");
+    const [NewMessageSound, NotificationSound, SentSound] = $('*audio');
+    
+    // give id for each bar 
+    const barIds = []
+    Bars.forEach(bar => {
+      let id = Date.now();
+      while(barIds.includes(id)){
+        id = Date.now()
+      }
+      bar._id = id;
+      barIds.push(id)
+    })
+    
+    
+const play = (audio, volume = 1, currentTime = 0) => {
+  audio.currentTime = currentTime;
+  audio.volume = volume
+  audio.play()
+}
+ 
+
+ 
+mainBar = NavBar;
+scroll(SettingsBar)
+let focusedChat;
+isSpas = true;
+
+// selecting and sending files 
+const [attachHead, attachBody, attachActions, attachGuider] = AttachBar.querySelectorAll("div");
+const [attachBtn, attachDoneBtn] = attachActions.querySelectorAll("*")
+function FileSelection(data){
+  openBar(AttachBar, "flex");
+  //clear(attachBody)
+  const defaultData = {
+    min: 1,
+    max: 100,
+    maxSize: 1024, // in mbs ,
+    types: ["image", "audio", "video", "raw"],
+    uploadSize: 0,
+    uploadCount: 0,
+    files: {}
+  }
+  
+  
+  
+  
+  data = {...defaultData, ...data}
+  const updateCounter = (count = data.uploadCount) => {
+    attachHead.innerHTML = `<span>Attached Files: ${data.uploadCount}</span> <span>Attached Size: ${Math.round(data.uploadSize)}MB</span>`;
+  }
+  
+  updateCounter();
+  attachGuider.textContent = `Double click to delete file, long press to change caption, max size: ${Math.round(data.maxSize)}MB, max files: ${data.max}`
+  
+  const picker = createEle("input", {
+    "type": "file",
+    allowed: data.types.join(", "),
+    multiple: true
+  });
+  
+  attachBtn.onclick = () => {
+    picker.click()
+  }
+  
+  picker.addEventListener("change", async () => {
+    load(true);
+    let fileIndex = 0;
+    attachBtn.textContent = "Break Adding ⛓️";
+    let breakUpload = false;
+    attachBtn.onclick = () => {
+      breakUpload = true
+    }
+    
+    
+    
+    
+    while(fileIndex < picker.files.length){
+      if(breakUpload) break
+      const file = picker.files[fileIndex]
+      file.getMeta = (options = {blob: false, buffer: false}) => {
+        return getFileMetadata(file, options)
+      }
+      // check size 
+      file.data = await file.getMeta();
+      
+      if(data.uploadSize + file.data.size > data.maxSize){
+        alert("max size exceeded")
+        break
+      }else if(data.uploadCount+1 >= data.maxUpload){
+        alert("total upload exceeded")
+        break
+      }
+      
+      
+      const url = URL.createObjectURL(file);
+      const fileEle = File({
+        ...file.data,
+        src: url,
+        fileType: file.data.type,
+        type: "box",
+        file,
+        caption: shortenText(file.name, 20)
+      })
+      
+      attachBody.prepend(fileEle);
+      fileEle.addEventListener("dblclick", () => {
+        data.uploadCount--;
+        data.uploadSize -= file.data.size;
+        URL.revokeObjectURL(url)
+        fileEle.remove();
+        updateCounter();
+        delete data.files[file.data._id]
+      })
+      
+      onLongPress(fileEle, (e) => {
+       if(file.data.type == "video" &&  getClickedX(fileEle, e.touches[0].clientX) == 'right') return
+       const text = prompt(`write caption for this ${file.data.type}`, file.data.name);
+       if(!text) return
+       fileEle.changeCaption(shortenText(text, 15))
+       file.data.name = text
+       data.files[file.data._id] = file.data
+      })
+      
+      fileIndex++
+      data.uploadCount++
+      data.uploadSize += file.data.size
+      data.files[file.data._id] = file.data
+      if(this.onSelection) this.onSelection(file, data);
+    }
+    
+    updateCounter()
+    attachBtn.textContent = "Attach File"
+    attachBtn.onclick = () => picker.click()
+    load(false)
+    
+    this.data = () => data;
+    attachDoneBtn.onclick = () => {
+      const files = Object.values(data.files);
+      this.onSelect(files)
+      closeBar(AttachBar)
+    }
+  })
+}
+
+
+/* getting data */ 
+
+let chats = getData("chats") || []
+const draftMessages = getData("draftMessages") || {};
+const messageToSee = getData("messageToSee") || {};
+let userInfo = getData("userInfo") || false;
+
+// for typing 
+const typingTimeout = .2
+
+const chatDetail = {
+  private: "only users with this group id can join the chat",
+  public: "everybody can search and join this chat"
+}
+
+const getChat = id => {
+  worker.postMessage("getChat", id);
+  worker.onmessage("gettedChat", e => {
+    return e.data
+  })
+}
+
+// for storing in localstorage
+const setChat = (id, newChat) => {
+  chats = chats.map(chat => {
+    return chat._id == id ? newChat : chat
+  })
+}
+
+
+
+/* ui functions */ 
+
+GroupsBarNavs.forEach(nav => {
+  nav.onclick = () => {
+    GroupsBarNavs.forEach(nv => {
+      nv.className = nv == nav ? "nav active clickable" : "nav clickable"
+      GroupsBarForms.forEach(form => {
+        form.style.display = form.getAttribute("for") == nav.getAttribute("for") ? "flex" : "none"
+      })
+    })
+  }
+})
+
+/* setting io */
+let socket = io("http://localhost:8080", {
+  autoConnect: false,
+  auth: { token },
+  reconnection: true, // Enable reconnection
+  reconnectionAttempts: Infinity, // Number of reconnection attempts
+  reconnectionDelay: 1000, // Initial delay between reconnection attempts
+  reconnectionDelayMax: 5000, // Maximum delay between reconnection attempts
+  timeout: 20000, // Connection timeout
+});
+
+const connectSocket = () => {
+  socket.connect();
+}
+
+const checkConnection = () => {
+  if(!socket.connected) alert("Not Connected", false)
+  return socket.connected
+}
+
+socket.on("connect", () => {
+  console.log(socket.id)
+})
+
+// connection error 
+listenSocket("connect_error", er => {
+  //alert(er.message, false)
+})
+
+
+// for showing / highlighing element;
+let highlightTimer;
+const highlight = ele => {
+  clearTimeout(highlightTimer)
+  ele.style.animationName = "highlight";
+  highlightTimer = setTimeout(() => 
+    ele.style.animationName = ""
+  ,500)
+}
+
+// for updating chat data 
+const updateChatData = chat => {
+  chats = chats.map(ch => ch._id == chat._id ? chat : ch);
+}
+
+
+
+   
+   
+  // adding ui controls
+  const [AddNav, SettingNav, GroupsNav] = Navs.querySelectorAll("nav");
+  
+
+   GroupsNav.onclick = () => {
+     openBar(GroupsBar);
+   }
+   
+   AddNav.onclick = () => {
+     openBar(ChatsSearchBar, "flex")
+   }
+   
+   
+   SettingNav.onclick = () => {
+     openBar(SettingsBar)
+   }
+   
+   /* for user setting and info */
+      const updateSettingInput = info => {
+     $("*.setting *[for]").forEach(input => {
+       if(input.tagName.toLowerCase() == "select" && input.name == "country"){
+         const countrySelect = Countries(countries);
+         input.replaceWith(countrySelect);
+         input = countrySelect
+       }
+       
+       const isFor = input.getAttribute("for");
+       input.value = info[isFor];
+       input.setAttribute("staticVal", info[isFor])
+     })
+   }
+   
+ const validateSettingsInput = (type, info, updates) => {
+  const [nameInput, countryInput, genderInput, bioInput, emailInput, phoneInput] = $(".setting *[for]")
+  if (type == "basic") {
+    // name city bio 
+    return inputHasChanged(nameInput) || inputHasChanged(countryInput)  || inputHasChanged(genderInput) || inputHasChanged(bioInput) || info.profilePic !== updates.profilePic
+  } else {
+    // email phone 
+    return inputHasChanged(emailInput) || inputHasChanged(phoneInput)
+  }
+}
+
+  const updateSettingInfo = (info) => {
+  const staticInfo = {...info};
+  const updates = {...info};
+  
+  
+  updateSettingInput(info);
+  let settingProfile = SettingsBar.querySelector(".profile")
+  const picker = ProfilePickerComp( `${API_BASE_URL}/${info.profilePic?.url}`, "person");
+  picker.classList.add("profile")
+  settingProfile.replaceWith(picker);
+  settingProfile = picker
+ let settingProfilePic;
+ 
+ 
+   settingProfile.onchange = (fl) => {
+     settingProfilePic = fl.file;
+     updates.profilePic = updates.profilePic ? {...updates.profilePic, name: fl.name} : {name: fl.name}
+   }
+  
+  
+  const settingInputs = $('*.setting *[for]');
+  const [basicSaveBtn, advanceSaveBtn] = $('*.setting *.save')
+  
+  settingInputs.forEach(input => {
+    const isFor = input.getAttribute("for");
+    
+    if (input.tagName.toLowerCase() !== "select") {
+      onInput(input, v => {
+        updates[isFor] = v;
+      })
+    } else {
+      onChange(input, v => {
+        updates[isFor] = v;
+      })
+    }
+    
+    basicSaveBtn.onclick = () => {
+      saveSetting("basic", staticInfo, updates)
+    }
+    
+    advanceSaveBtn.onclick = () => {
+      saveSetting("sensitive", staticInfo, updates)
+    }
+    
+  })
+  
+  
+  // update statics also 
+  roleDisplay = $('.setting .role');
+  roleDisplay.textContent = info.role ? `Role: ${info.role}` : "user" // basic user is default
+  
+  
+  const saveSetting = async (type, info, updates) => {
+    if (validateSettingsInput(type, info, updates)) {
+      load(true);
+      
+      const data = new FormData();
+      data.append("updates", JSON.stringify(updates));
+      data.append("profilePic", settingProfilePic)
+      
+     const res = await request.post(`/api/user/setting/${type}/update`,
+        data)
+     if(!res) return
+    
+          alert(res.message, res.updated);
+          if (res.updated){
+            userInfo = res.user
+            updateSettingInfo(userInfo);
+            if(type == "basic"){
+              const found = []
+              chats.forEach(chat => {
+                chat.peoples = chat.peoples.map(p => {
+                  if(p._id == userId){
+                    found.push(true);
+                    const {peoplesWrapper} = chatWindows[chat._id];
+                    const newPersonData = {...p, profilePic: userInfo.profilePic, name: userInfo.name, bio: userInfo.bio}
+                    if(peoplesWrapper){
+                      peoplesWrapper.updatePerson(newPersonData)
+                    }
+                    return newPersonData
+                  }else{
+                    found.push(false)
+                    return p
+                  }
+                })
+                if(found.includes(true)) updateChatData(chat)
+              })
+            }
+          }
+        } else {
+      alert("No Changes Made", false)
+    }
+  }
+}
+   
+   
+  /* searchbar sorters and other ui function */ 
+  let searchValue = "";
+  let found = 0;
+  
+  // adding sorters / filters
+  let sorters = [{
+    name: "all",
+    count: 0,
+    active: true,
+    handler: chat => true
+  },{
+    name: "unread",
+    count: 0,
+    active: false,
+    handler: chat => chat.newMessages
+  },{
+    name: "yours",
+    count: 0,
+    active: false,
+    handler: chat => (chat.createdBy == userId)
+  },
+  {
+  name: "official",
+  count: 0,
+  active: false,
+  handler: chat => (chat.type == "universal")
+  }, 
+  {
+    name: "active",
+    count: 0,
+    active: false,
+    handler: chat => {
+      const onlines = chat.peoples.map(person => person.online) || [false];
+      return !onlines.includes(false)
+    }
+  }
+  ]
+  
+  
+  const updateSorters = () => {
+    clear(Sorters)
+    sorters.forEach((sortData, index) => {
+      Sorters.appendChild(sorter(sortData, index));
+    });
+  }
+  
+  const resetSorters = () => {
+sorters.forEach((sortData, index) => {
+  sortData.active = (sortData.name == "all")
+});
+
+
+filterChats()
+ }
+  
+  const updateNavs = () => {
+    clear(ChatNavs);
+    chats = chats.sort((a, b) => +b.updateTime - +a.updateTime)
+    .map((chat,index) => {
+      chat.newMessages = chat.messages.filter(message => !message.seenBy.includes(userId) && !messageToSee[chat._id].includes(message._id)).length || 0;
+      updateChatData(chat)
+      addNav(chat);
+      return chat
+    })
+    console.log('updated')
+  }
+  
+  const updateNav = (chat, goTop = false) => {
+    const newChat = chatNavComp(chat);
+  }
+  
+  // we need to update peoples when peoples join or leave 
+  const updatePeoples = chat => {
+    const {_id} = chat;
+      const chatWindow = chatWindows[chat._id];
+      const chatHead = chatHeadComp(chat)
+      let peoplesWrapper;
+      
+      if(chat.type !== "private"){
+        peoplesWrapper = peoplesWrapperComp(chat);
+        chatWindow.peoplesWrapper.replaceWith(peoplesWrapper)
+      }
+      
+      chatWindow.chatHead.replaceWith(chatHead)
+    
+      chatWindows[chat._id] = chat.type !== "private" ?
+      {...chatWindow ,chatHead, peoplesWrapper} : 
+      {...chatWindow, chatHead}
+  }
+  
+  
+  const filterChats = () => {
+    let found = 0
+    for(_id in chatWindows){
+      const {chatNav, index} = chatWindows[_id]
+      let searchingMatched = false;
+      let sortingMatched = false;
+      let display = "none";
+     
+      
+      sorters.filter(sortData => {
+         if(sortData.active) sortingMatched = sortData.handler(chats[index]);
+      })
+      
+      if(chatNav.textContent.toLowerCase().includes(searchValue)
+      || searchValue.includes(_id)) searchingMatched = true;
+      
+      if(searchingMatched && sortingMatched){
+        display = "flex"
+        found++
+      }
+      
+      chatNav.style.display = display;
+    }
+    
+    sorters = sorters.map(sorter => {
+      sorter.count = 0;
+      chats.forEach(chat => {
+        if(sorter.handler(chat)) sorter.count++
+      })
+      
+      sorter.count = sorter.active ? found : sorter.count
+      return sorter
+    })
+    
+    updateSorters()
+  }
+   
+ 
+
+  
+  
+  
+  const updateDashboard = async token => {
+   const data = await request.get("/api/user/dashboard", {
+     headers: {
+       retries: 3
+     }
+   })
+   
+   
+   if(!data) return
+    if (!data.found) return navigate(data.redirect);
+    chats = data.chats;
+    userInfo = data.userInfo
+    setData("chats", data.chats);
+    setData("userInfo", data.userInfo);
+    //updateUi(data);
+  }
+  
+  
+  
+  
+  /* updating dashboard */ 
+  let chatWindows = {}
+  
+  
+  const addNav = (chat, addToBottom = true) => {
+    const chatNav = chatNavComp(chat);
+    addToBottom ? ChatNavs.appendChild(chatNav) : ChatNavs.prepend(chatNav);
+    chatWindows[chat._id].chatNav = chatNav
+    return chatNav
+  }
+  
+  
+  
+  const addChat = async (chat, index, addToBottom = true) => {
+      if(!messageToSee[chat._id]) messageToSee[chat._id] = []
+      chat.newMessages = chat.messages.filter(message => !message.seenBy.includes(userId) && !messageToSee[chat._id].includes(message._id)).length || 0;
+      chat.peoples = chat.peoples.map(p => {
+        if (p._id == userId) p.online = true
+        return p
+      })
+      
+
+      const {_id, createdBy, type} = chat;
+      
+      if(chat.type == "private"){
+        chat.friend = chat.peoples.find(p => p._id !== userId);
+        chat.online = chat.friend.online
+        chat.groupPic = chat.friend.profilePic
+       }else{
+         chat.online = chat.peoples.some(p => p._id !== userId && p.online)
+       }
+      
+       const chatHead = chatHeadComp(chat);
+       const messagesBox = messagesBoxComp(chat.messages, chat);
+       let peoplesWrapper;
+       if(type == "group") peoplesWrapper = peoplesWrapperComp(chat);
+      
+      
+       const messageInput = messageInputComp(chat, messagesBox);
+       let chatNav;
+       
+       chatWindows[_id] = type == "group" ?
+       {messageInput, chatHead, messagesBox, peoplesWrapper} : 
+       {messageInput, chatHead, messagesBox}
+   
+   
+       chatNav = addNav(chat, addToBottom);
+       
+       
+       const openPeoplesBar = () => {
+         openBar(PeoplesBar);
+         clear(PeoplesBar)
+         PeoplesBar.appendChild(chatPeoples);
+       }
+       
+       chat.update = () => {
+         chat.updateTime = Date.now();
+         updateChatData(chat);
+         updateNavs()
+       }
+       
+       
+      return {chatNav, chatHead, messagesBox, chat}
+  }
+  
+  
+  
+const MAX_CHAT_RENDER = 10;
+  const updateUi = (data) => {
+     try{
+      if(!data.chats || !data.userInfo) throw new Error("invalid data")
+      let {chats, userInfo} = data;
+      
+      clear(ChatNavs);
+      clear(Sorters);
+      
+      const chatIds = []
+     
+     let chatIndex = 0;
+     const renderChats = (self) => {
+     let renderedChat = 0;
+     if(chatIndex == chats.length) return
+     while(renderedChat < MAX_CHAT_RENDER && chatIndex !== chats.length){
+       const chat = chats[chatIndex];
+       addChat(chat)
+       renderedChat++
+       chatIndex++
+       }
+     }
+     
+     renderChats();
+     new OnScrollEnd($(".chatNavs"), "bottom", true, self => {
+       return renderChats(self)
+     })
+    
+    
+         
+   // delete draft messages without chats 
+   chatIds.forEach(id => {
+     if(!draftMessages[id]) delete draftMessages[id]
+   })
+   
+   updateSettingInfo(userInfo)
+   connectSocket();
+   close(PlashScreen);
+   updateSorters()
+     }catch(er){
+       console.log(er)
+       alert("Error Updating Dashboard", false)
+     }
+  }
+  
+  
+ 
+  
+ if(chats.length && userInfo){
+   updateUi({chats, userInfo});
+   updateDashboard(token);
+ }else{
+   updateDashboard(token)
+   close(PlashScreen)
+ }
+ 
+ 
+ 
+ 
+
+  onInput(SearchInput, value => {
+    searchValue = value.toLowerCase().trim()
+    filterChats()
+  })
+ 
+ /* creating and joining room */
+ const newData = {
+   create: {
+     groupName: "",
+     groupDescription: "",
+     "for": "private",
+     messageAllowed: true
+   },
+   join: {
+     id: ""
+   }
+ }
+ 
+ let createGroupPic;
+ const [CreateGroupForm, JoinGroupForm] = GroupsBarForms;
+ const [CreateNameInput, CreateDescriptionInput, CreateChatTypeSelect, CreateMessageAllowedSelect, CreateGroupBtn] = CreateGroupForm.querySelectorAll(".direct")
+ const [JoinIdInput, JoinChatBtn] = JoinGroupForm.querySelectorAll("*")
+
+onInput(CreateNameInput, v => {
+  newData.create.groupName = v
+})
+ 
+onInput(CreateDescriptionInput,value => {
+  newData.create.groupDescription = value
+})
+
+CreateChatTypeSelect.onchange = e => {
+  newData.create["for"] = CreateChatTypeSelect.value
+}
+
+CreateMessageAllowedSelect.onchange = e => {
+  newData.create.messageAllowed = (CreateMessageAllowedSelect.value == "true")
+}
+ 
+onInput(JoinIdInput,value => {
+  newData.join.id = value
+})
+
+
+// creating chat
+
+const createGroupPicPicker = ProfilePickerComp("image.png","group");
+CreateGroupForm.prepend(createGroupPicPicker);
+createGroupPicPicker.onchange = fl => {
+  createGroupPic = fl.file;
+}
+
+CreateGroupBtn.onclick = async e => {
+  const {groupName, groupDescription, messageAllowed} = newData.create
+  if(!groupName || !groupDescription){
+    alert(!groupName ? "Enter Chat Name" :  "Enter Chat Description", false)
+    return
+  }else if(!newData.create.for){
+    alert("select chat privacy type", false)
+    return
+  }
+  
+  load(true);
+  const data = new FormData();
+  data.append("chatData", JSON.stringify(newData.create));
+  data.append("groupPic", createGroupPic)
+  
+  const res = await request.post("/api/chats/create", data)
+  if(!res) return
+    
+    if(!res.created) {
+      alert(res.message, false);
+      return
+    }
+   
+    res.chat.newMessages = 0;
+    res.chat.messages = []
+    res.chat.peoples = [{
+      name: userInfo.name,
+      _id: userId,
+      online: true,
+      bio: userInfo.bio,
+      lastSeen: Date.now(),
+      profilePic: userInfo.profilePic
+    }]
+    
+    joinChat(res.chat);
+}
+
+
+// join and open chat 
+const joinChat = chat => {
+  chats.push(chat);
+  close(lastBar.bar);
+  bars.pop();
+  const {chatNav} = addChat(chat, chats.length, false);
+  chatNav.click();
+  resetSorters();
+  updateNavs()
+}
+
+
+// chat searching
+const ChatSearchInput = ChatsSearchBar.querySelector("input")
+const ChatSearchHead = ChatsSearchBar.querySelector('.head');
+const ChatSearchDisplay = ChatsSearchBar.querySelector('.display')
+const FoundDisplay = ChatsSearchBar.querySelector(".head .found")
+
+clear(ChatSearchDisplay);
+FoundDisplay.textContent = "Found: 0";
+
+let searchTimer;
+let searchDelay = .5
+
+const searchChats = async value => {
+  if(value){
+    clearTimeout(searchTimer)
+    searchTimer = setTimeout(async () => {
+    FoundDisplay.textContent = "Searching Chats...";
+    const chats = await request.get(`/api/chats/search?search=${value}`, {
+      onError: () => {
+        FoundDisplay.textContent = 'Searching Error...'
+      },
+      alerting: false
+    })
+    if(!chats) return
+      if(chats.length){
+        clear(ChatSearchDisplay);
+      }
+      chats.forEach(chat => {
+        ChatSearchDisplay.appendChild(chatDisplay(chat))
+      })
+      FoundDisplay.textContent = `Found: ${chats.length}`;
+    }, 300)
+  }
+}
+
+onInput(ChatSearchInput, searchChats);
+
+// when someone is online 
+listenSocket("goes online", (data) => {
+  const {chatIds, personId} = data
+  chats = chats.map(chat => {
+    if(chatIds.includes(chat._id)){
+      chat.peoples = chat.peoples.map(person => {
+        if(person._id == personId) person.online = true
+        return person
+      })
+      
+      updatePeoples(chat)
+    }
+    return chat
+  })
+})
+
+// when someone goes offline
+listenSocket("goes offline", (data) => {
+  const {chatIds, personId} = data
+  chats = chats.map(chat => {
+    if (chatIds.includes(chat._id)) {
+      chat.peoples = chat.peoples.map(person => {
+        if(person._id == personId) person.online = false;
+        return person
+      })
+      updatePeoples(chat)
+    }
+    return chat
+  })
+})
+
+
+// incoming messages 
+const addNewMessage = async message => {
+ const { from, to } = message;
+const {messagesBox, chatNav} = chatWindows[to];
+const chat = await getChat(to);
+console.log('yes')
+messagesBox.addMessage(message);
+
+chat.messages.push(message);
+chat.newMessages++;
+chat.updateTime = message.createdAt;
+
+if(from._id !== userId){
+if (focusedChat == to) {
+  play(NewMessageSound);
+} else {
+  play(NotificationSound);
+}
+}else{
+  play(SentSound)
+}
+
+updateChatData(chat)
+chatNav.remove();
+const newNav = chatNavComp(chat)
+ChatNavs.prepend(newNav);
+chatWindows[to] = {...chatWindows[to], chatNav: newNav}
+}
+
+// sending messages 
+
+const sendMessage = async messageData => {
+  const chatData = await getChat(messageData.to);
+  const {messagesBox} = chatWindows[chatData._id];
+  
+  messagesBox.addMessage({...messageData, action: "sending..."})
+  
+  const data = new FormData();
+  data.append("messageData", messageData)
+  data.append("file", messageData.file);
+  delete messageData.file
+    
+  const res = await request.post("/api/message/send", data);
+  if(!res){
+    messagesBox.removeMessage(messageData._id)
+  if (reason == 'blocked') {
+    chatData.blockedPeoples.push(userId);
+    updateChatData(chatData)
+    updateMessages(chatData);
+    updatePeoples(chatData)
+  } else if (reason == "notPermitted") {
+    chatData.messageAllowed = false;
+    updateChatData(chatData)
+    updateMessages(chatData)
+  } else if (reason == "notFound") {
+    // not found of unhandled
+    leaveGroup(chatData._id)
+  }
+
+  return
+}
+
+messagesBox.replaceMessage({ ...data, _id: messageData._id }, false, false, data._id)
+chatData.messages.push(data);
+updateChatData(chatData)
+play(SentSound);
+}
+
+
+// joining chat 
+
+const joinChatWithFetch = async (id, type = "public", peoples) => {
+  load(true)
+  const res = await request.post("/api/chats/join", 
+  {
+    chatId: id,
+    type,
+    peoples
+  })
+    
+    if(!res) return
+    
+    if (!res.joined) {
+      alert(res.message, false)
+      return
+    };
+    
+    joinChat(res.chat);
+}
+
+
+// updating messages and message 
+const updateMessages = chat => {
+  const chatWindow = chatWindows[chat._id];
+  const messagesBox = messagesBoxComp(chat.messages, chat)
+  const messageInput = messageInputComp(chat, messagesBox);
+  
+  chatWindow.messagesBox.replaceWith(messagesBox);
+  chatWindow.messageInput.replaceWith(messageInput)
+
+  chatWindows[chat._id] = {...chatWindow, messagesBox, messageInput}
+}
+
+// blocking and unblocking users
+
+const blockPerson = async (personName, personId, chatId, cb = () => false) => {
+  confirmation(`you want to block ${personName}`,async agreed => {
+  if(agreed){
+  load(true);
+  const data = await request.post("/api/chats/block", 
+  {
+      personId,
+      chatId
+  })
+  
+  if(!data.blocked){
+    alert(data.message, false)
+    cb(false)
+    return
+  }
+  
+      const chat = await getChat(chatId);
+      chat.blockedPeoples.push(personId);
+      updateChatData(chat)
+      updatePeoples(chat)
+      cb(true)
+  }
+ })
+}
+
+
+// unblock user 
+const unblockPerson = async (personName, personId, chatId) => {
+  confirmation(`you want to unblock ${personName}`,async agreed => {
+  if(agreed){
+  load(true);
+  const data = await request.post("/api/chats/unblock", 
+    {
+      personId,
+      chatId
+    }
+  )
+  
+ if(!data) return
+ 
+    alert(!data.unblocked ? data.message : `you unblocked ${personName}`, data.unblocked)
+    if(!data.unblocked) return
+
+      const chat = await getChat(chatId);
+      chat.blockedPeoples = chat.blockedPeoples.filter(_id => _id !== personId);
+      updateChatData(chat)
+      updatePeoples(chat);
+  }
+})
+}
+
+ 
+ 
+// when someone blocked you in his chat 
+listenSocket("blocked person", async (systemMessage)  => {
+  const {to, from} = systemMessage;
+  const chatId = to;
+  const chat = await getChat(chatId);
+  const {messagesBox} = chatWindows[chatId]
+  if(chat.blockedPeoples.includes(from._id)) return
+  chat.blockedPeoples.push(from._id);
+  updateChatData(chat)
+  messagesBox.removeMessagesEvent();
+  updatePeoples(chat);
+  addNewMessage(systemMessage)
+})
+
+// when someone unblocked you in his chat 
+listenSocket("unblocked person",async (systemMessage)  => {
+  const {from, to} = systemMessage;
+  const chatId = systemMessage.to;
+  const chat = await getChat(chatId);
+  const {messagesBox} = chatWindows[chatId]
+  if(!chat.blockedPeoples.includes(from._id)) return
+  chat.blockedPeoples = chat.blockedPeoples.filter(_id => _id !== from._id)
+  updateChatData(chat)
+  messagesBox.addMessagesEvent()
+  updatePeoples(chat);
+  addNewMessage(systemMessage);
+})
+
+
+
+JoinChatBtn.onclick = e => {
+  const { id } = newData.join
+  if (!id || id.length < 12) {
+    alert(!id ? "Enter Chat Id" : "Invalid Chat Id, Id Must Be 12 Or Greater", false)
+    return
+  }
+  
+  if(id in chatWindows){
+    history.back()
+    setTimeout(() => chatWindows[id].chatNav.click(), 100)
+    return
+  }
+  
+  joinChatWithFetch(id)
+}
+
+// when someone joins 
+
+listenSocket("joined group",async (systemMessage) => {
+  systemMessage.from = {
+    name: systemMessage.person.name,
+    _id: systemMessage.person._id
+  }
+  
+  const group = await getChat(systemMessage.to);
+  const peoples = group.peoples.map(p => p._id);
+  if(peoples.includes(systemMessage.person._id)) return
+  group.peoples.push(systemMessage.person);
+  delete systemMessage.person
+  addNewMessage(systemMessage);
+  updateChatData(group)
+  updatePeoples(group)
+})
+
+
+// leaving chat 
+
+const leaveGroup = id => {
+ const { chatNav } = chatWindows[id];
+chatNav.remove();
+chats = chats.filter(chat => chat._id !== id);
+delete chatWindows[id];
+lastBar = false;
+closeBar(MessageBar);
+open(mainBar)
+updateNavs()
+}
+
+
+const leaveGroupWithFetch = id => {
+  if(checkConnection()){
+  confirmation("You Want To Leave This Group",async agreed => {
+  if(!agreed) return
+  load(true)
+ 
+  const res = await request.post("/api/chats/leave", {
+    chatId: id
+  })
+  
+  if(!res) return
+  load(false);
+    
+    alert(res.message, res.left)
+    if(!res.left){
+      return
+    }
+    
+    leaveGroup(id)
+  })
+  }
+}
+
+
+// when someone left the chat 
+listenSocket("left group", (systemMessage) => {
+  const {to, from} = systemMessage;
+  addNewMessage(systemMessage);
+  chat = chats.map(chat => {
+    if(chat._id == to){
+      const peoples = chat.peoples.map(p => p._id)
+      if(!peoples.includes(from._id)) return
+      chat.peoples = chat.peoples.filter(person => person._id !== from._id);
+      updatePeoples(chat)
+    }
+    return chat
+  })
+})
+
+// when someone send message 
+listenSocket("sent message", (message, seeCb = false) => {
+  addNewMessage(message);
+  
+  if(message.to == focusedChat){
+    if(seeCb){
+      seeCb(userId)
+      if(!message.seenBy.includes(userId)) message.seenBy.push(userId)
+    }
+  }
+  
+})
+
+// update all date after 1 minute
+setInterval(() => {
+  $('*.time').forEach(time => {
+    const t = time.getAttribute("time");
+    if(t){
+      time.textContent = formatTime(parseInt(t))
+    }
+    })
+}, 60 * 1000)
+  
+
+const goOnline = () => {
+  const chatIds = chats.map(chat => chat._id);
+  emitSocket('go online', chatIds)
+}
+
+const goOffline = () => {
+  chats = chats.map(chat => {
+  chat.poeples = chat.peoples.map(person => {
+    if(person.online) person.lastSeen = Date.now()
+    person.online = false;
+    return person
+  });
+  
+  return chat
+})
+}
+
+// fancy style connection showing 
+listenSocket('connect', () => {
+    $('header .name').id = "connected"
+    seeMessagesOnline(messageToSee, userId);
+    goOnline()
+  })
+
+listenSocket('disconnect', () => {
+  $('header .name').id = "";
+  goOffline()
+})
+
+
+onunload = () => {
+  goOffline()
+  setData("draftMessages", draftMessages);
+  setData("chats", chats);
+  setData("userData", userData);
+  setData("userInfo", userInfo)
+  setData("messageToSee", messageToSee);
+}
+  
+
+// looking at messages offline
+const seeMessage = chat => {
+  const chatMessages = messageToSee[chat._id];
+  if(chatMessages){
+  let lastLength = chatMessages.length
+  
+  chat.messages = chat.messages.map(message => {
+    const {to, _id} = message;
+    let seen = message.seenBy.includes(userId) || chatMessages.includes(_id)
+    if(!seen){
+      message.seenBy.push(userId);
+      messageToSee[chat._id].push(_id)
+    }
+    
+    return message
+  })
+  
+ 
+  updateChatData(chat);
+  if(chatMessages > lastLength) seeMessagesOnline(messageToSee)
+  }
+}
+
+// looking at messages online 
+const seeMessagesOnline = (messageToSee) => {
+  emitSocket("see messages", messageToSee, (chatIds, seenedMessages) => {
+    if(chatIds.length){
+     chatIds.forEach(_id => {
+       messageToSee[_id] = messageToSee[_id].filter(msgId => !seenedMessages.includes(msgId))
+     })
+    }
+  })
+}
+
+// when someone see messages 
+listenSocket("seen messages", (chatIds, messagesIds, personId) => {
+  chats.forEach(chat => {
+    if(chatIds.includes(chat._id)){
+      chat.messages = chat.messages.map(message => {
+        if(messagesIds.includes(message._id) && !message.seenBy.includes(personId)){
+          message.seenBy.push(person._id);
+          const msgEle = chatWindows[chat._id].messagesBox.querySelector(`[id="${message._id}"]`);
+          if(msgEle) msgEle.replaceWith(messageBoxComp(message, chat))
+        }
+        return message
+      })
+      
+      updateChatData(chat)
+    }
+  })
+})
+
+// when someone delete message 
+listenSocket("deleted messages", async (chatId, deletedMessages, id) => {
+  const chat = await getChat(chatId);
+  const {messagesBox} = chatWindows[chatId];
+  
+  chat.messages = messages.map(msg => {
+   let deletedMsg = false;
+    if(deletedMessages.includes(msg._id)){
+     deletedMsg = {
+      ...msg,
+      deleted: id,
+      action: "deleted"
+    }
+    
+    messagesBox.replaceMessage(deletedMsg, false, true)
+   }
+    
+    return deletedMsg ? deletedMsg : msg
+})
+
+updateChatData(chat)
+updateNavs()
+})
+
+
+// when someone edit message 
+listenSocket("edited message",async editedMessage => {
+  const chatId = editedMessage.to;
+  const messageId = editedMessage._id;
+  const chat = await getChat(chatId);
+  
+  const {messagesBox} = chatWindows[chatId];
+  messagesBox.replaceMessage(editedMessage, false, true)
+  chat.messages = chat.messages.map(message => message._id == messageId ? editedMessage : message);
+  updateChatData(chat)
+})
+
+const maxNamesToShow = 3;
+const typingTimers = {}; 
+const typers = {}; 
+
+listenSocket("is typing",async (chatId, personId) => {
+  try {
+    const chatWindow = chatWindows[chatId];
+    const chat = await getChat(chatId);
+
+    if (chat && chatWindow) {
+      if (!typers[chatId]) typers[chatId] = new Set();
+      if (!typingTimers[chatId]) typingTimers[chatId] = {};
+
+
+      typers[chatId].add(personId);
+      clearTimeout(typingTimers[chatId][personId]);
+
+      typingTimers[chatId][personId] = setTimeout(() => {
+       typers[chatId].delete(personId);
+
+        const { chatNav, chatHead } = chatWindow;
+
+        if (typers[chatId].size === 0) {
+          const nav = chatNavComp(chat);
+          const head = chatHeadComp(chat);
+          chatNav.replaceWith(nav);
+          chatHead.replaceWith(head);
+          chatWindows[chatId] = {...chatWindow, chatNav: nav, chatHead: head}
+        } else {
+          displayTyping(typers[chatId], chatWindow, chat, chatId);
+        }
+      }, 1000); // 1 second timeout
+
+      displayTyping(typers[chatId], chatWindow, chat, chatId);
+    }
+  } catch (er) {
+    console.log("typing error");
+    console.error(er);
+  }
+});
+
+const displayTyping = (typingIds, chatWindow, chat, chatId) => {
+  const namesToShow = [];
+
+  for (personId of typingIds) {
+    const person = chat.peoples.find(p => p._id == personId)
+    if (person && namesToShow.length < maxNamesToShow) {
+      namesToShow.push(person.name);
+    }
+  }
+  
+  
+
+  const { chatNav, chatHead } = chatWindow;
+  const navDisplay = chatNav.querySelector(".message");
+  const headDisplay = chatHead.querySelector("marquee");
+  
+  if(namesToShow.length > 0){
+  const displayText =
+    namesToShow.length === 1
+      ? `${namesToShow[0]} is typing...`
+      : namesToShow.length < maxNamesToShow
+      ? `${namesToShow.join(" and ")} are typing...`
+      : `${namesToShow.slice(0, maxNamesToShow).join(", ")} and others are typing...`;
+
+ 
+  const display = createEle("div",{
+    "class": "typing_indicator message"
+  }, displayText)
+  
+  navDisplay.innerHTML = `<span class="typing_indicator">${displayText}</span>`
+  headDisplay.replaceWith(display);
+  }
+};
+
+// after updating group setting
+listenSocket("group setting updated",async (chatId, systemMessage) => {
+  const updates = JSON.parse(systemMessage.content);
+  const chat = await getChat(chatId);
+  const oldChat = {...chat};
+  for(const k in updates){
+    chat[k] = updates[k]
+  }
+  
+  updateChatData(chat);
+  updatePeoples(chat);
+  if(hasChanged(oldChat.messageAllowed, updates.messageAllowed)) updateMessages(chat)
+  addNewMessage(systemMessage)
+})
+
+  
+  
+  
+ 
+  
+  </script>
+  
+
+</body>
+</html>

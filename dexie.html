@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  
+  html{
+    overflow: hidden;
+  }
+  
+  body{
+    background: black;
+    color: white;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    row-gap: .5rem;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .actions{
+    width: inherit;
+    height: inherit;
+    display: inherit;
+    flex-direction: inherit;
+    row-gap: 1rem;
+    width: 80%;
+    margin: 0;
+    height: max-content;
+    align-items: center;
+  }
+  
+  .actions *{
+    width: 100%;
+    border-radius: .5rem;
+    background: #58C1E9;
+    padding: .5rem;
+    border: none;
+    color: white;
+    font-weight: bold;
+    transition: all .2s 0s;
+  }
+  
+  .actions *:active{
+    background: #1D5970;
+    transform: scale(.9);
+  }
+    
+    .displays .fileDisplay{
+      width: 90%;
+      height: 300px;
+      background: gray;
+      border-radius: .5rem;
+      border: 2px solid white;
+    }
+    
+    .displays{
+      width: 90%;
+      height: 80%;
+      overflow-y: scroll;
+      display: flex;
+      flex-direction: column;
+      row-gap: 1rem;
+      align-items: center;
+    }
+    
+
+    .displays .display-a{
+      height: max-content;
+      padding: .5rem;
+      background: black;
+      color: #4DCDFF;
+      text-decoration: none;
+    }
+    
+    .displays .display-audio{
+      width: normal;
+      border: none;
+      height: 300px;
+      background: transparent;
+      margin: .5rem;
+    }
+    
+    
+  </style>
+</head>
+<body>
+  
+  <div class="actions">
+  <input type"images/*" multiple class="file" type="file">
+  <button class="save">Save file</button>
+  <button class="clear">clear all</button>
+  </div>
+  <br>
+  
+  <div class="displays"></div>
+  
+  <script src="dexie.js"></script>
+  <script>
+    
+    const db = new Dexie("snet");
+    db.version(1).stores({
+      files: "_id,createdAt,type,data,name"
+    })
+    
+    
+    const filePicker = document.querySelector(".file");
+    const [saveBtn,clearBtn] = document.querySelectorAll('button')
+    const displays = document.querySelector(".displays")
+    
+    let files = [];
+    filePicker.onchange = async () => {
+      files = filePicker.files;
+    }
+    
+    let fileIndex = 0;
+    const saveFiles = async () => {
+while (fileIndex < files.length) {
+  const file = files[fileIndex]
+  const buffer = await file.arrayBuffer();
+  const data = new Blob([buffer], {type: file.type})
+  
+  const fileData = {
+    createdAt: Date.now(),
+    type: file.type,
+    name: file.name,
+    data,
+    _id: Date.now()
+  }
+  
+  const flData = await db.files.add(fileData);
+  previewMedia(fileData)
+  fileIndex++
+}
+console.log(`${fileIndex} files saved`)
+
+fileIndex = 0;
+filePicker.value = "";
+filePicker.files = []
+}
+    
+    saveBtn.onclick = () => {
+      saveBtn.textContent = "saving files..."
+      saveFiles();
+      saveBtn.textContent = "save files"
+    }
+    
+    clearBtn.onclick = async () => {
+      clearBtn.textContent = "clearing files"
+      await db.files.clear();
+      displays.querySelectorAll("*").forEach(display => {
+      display.remove()
+      })
+      clearBtn.textContent = "clear all"
+      console.log("files cleared");
+    }
+    
+    const init = async () => {
+      const files = await db.files.toArray()
+      files.forEach(previewMedia);
+      console.log(`${files.length} items found`)
+    }
+    
+    
+    
+    const previewMedia = fileData => {
+  const url = URL.createObjectURL(fileData.data);
+  const fileType = fileData.type.split(":")[0] // Split by "/" instead of ":"
+  let eleData = { tag: "" }
+  if(fileType.includes("image")){
+    eleData.tag = "img";
+  }else if(fileType.includes("video")){
+    eleData.tag = "video";
+  }else if(fileType.includes("application/x-msdos-program") || fileType.includes("audio")){
+    eleData.tag = "audio";
+  }else{
+    eleData.tag = "a"
+  }
+  
+  eleData.name = fileData.name;
+  eleData.type = fileData.type
+  const element = document.createElement(eleData.tag);
+  if(eleData.tag == "img" || eleData.tag == "video" || eleData.tag == "audio"){
+    element.src = url;
+    element.controls = true;
+    element.alt = eleData.name;
+    element.loading = 'lazy';
+    element.currentTime = .1;
+    let isPlaying = false;
+    element.onclick = () => {
+      isPlaying = !isPlaying;
+      isPlaying ? element.play() : element.pause()
+    }
+  }else{
+    element.href = url;
+    element.download = fileData.name
+    element.textContent = `file: ${fileData.name}`
+  }
+  
+  element.className = `fileDisplay display-${eleData.tag}`
+  
+  
+  element.addEventListener("dblclick", async () => {
+    await db.files.delete(fileData._id);
+    element.remove()
+    URL.revokeObjectURL(url)
+    console.log("one file deleted " + fileData.name)
+  })
+ 
+  displays.prepend(element)
+}
+    
+    init()
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Password Reset</title>
+  <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+  <style>
+    
+    body{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      row-gap: 2rem
+    }
+    
+
+    
+    b{
+      width: 90%;
+    }
+    
+  </style>
+</head>
+<body>
+  
+  <div class="card">
+    <h3>Reset Password</h3>
+    <input placeholder="Enter Email Or Phone" type="text">
+    <input placeholder="Enter New Password" type="password">
+    <button class="reset clickable">Send Reset Link</button>
+  </div>
+   
+   
+   <b>by clicking send reset email, a link will be sent to your email click on the link to reset your password</b>
+   
+   
+   <script src="axios.js"></script>
+  <script src="main.js"></script>
+  <script>
+    
+    const [,cresidentialInput, passwordInput, resetBtn] = $("*.card *")
+    
+    const data = {
+      cresidential: "",
+      password: ""
+    }
+    
+    onInput(cresidentialInput, v => {
+      data.cresidential = v.trim().toLowerCase()
+    })
+    
+    onInput(passwordInput, v => {
+      data.password = v.trim().toLowerCase()
+    })
+    
+    resetBtn.onclick = () => {
+      if(data.cresidential && data.password.length > 6){
+        load(true)
+        axios.post("http://localhost:8080/api/user/password/reset", data)
+        .then(res => {
+          alert(res.data.message, res.data.reseted)
+        }).catch(er => {
+          alert("network error", false)
+        })
+        .finally(() => load(false))
+      }else{
+        alert(!data.cresidential ? "invalid cresidential" : "invalid or short password", false)
+      }
+    }
+    
+  </script>
+</body>
+</html>
