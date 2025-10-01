@@ -7,6 +7,7 @@ import {logger, log} from "./middlewares/logger.js";
 import userRouter from "./routers/user.js";
 import statsRouter from "./routers/stats.js";
 import chatRouter from "./routers/chat.js";
+import messageRouter from "./routers/message.js"
 import Chat from "./models/chat.js";
 import Message from "./models/message.js"
 import User from "./models/user.js";
@@ -30,6 +31,7 @@ app.use(logger)
 app.use("/api/user", userRouter);
 app.use("/api/stats", statsRouter);
 app.use("/api/chats", chatRouter);
+app.use('/api/message', messageRouter)
 app.get('/', (req, res) => {
     res.redirect('/start.html')
 })
@@ -113,9 +115,16 @@ function start() {
                
                if(pendingToDelete.length){
                await Pending.deleteMany({
-                   _id: {
-                       $in: pendingToDelete
-                   }
+                   $or: [
+                        {
+                         _id: {
+                         $in: pendingToDelete
+                        }
+                        },
+                       {
+                           to: []
+                       }
+                   ]
                })
                }
                
@@ -156,9 +165,7 @@ function start() {
 
                 
                 
-let chat = await checkCache(`chats:${messageData.to}`,async () => {
-    return [await Chat.findById(messageData.to), 300]
-})
+let chat = await Chat.findById(messageData.to)
 
 
                 if(!chat){
@@ -202,15 +209,11 @@ let chat = await checkCache(`chats:${messageData.to}`,async () => {
             $addToSet: {seenBy: viewerId.toString()},
         });
         
-        setCache(`messages:${message._id.toString()}`, message, 120)
-        console.log(`Message: ${message._id.toString()} viewed by ${viewerId}`);
+         console.log(`Message: ${message._id.toString()} viewed by ${viewerId}`);
     } catch (error) {
         console.error(`Error viewing message: ${error}`);
     }
-});
-                
-              setCache(`messages:${message._id.toString()}`, message, 120)
-            } catch (er) {
+});     } catch (er) {
                 log(er, "bad");
                 cb(false, 'unexpected error');
             }
@@ -219,9 +222,7 @@ let chat = await checkCache(`chats:${messageData.to}`,async () => {
         // deleting message
         socket.on("delete messages", async (messageIds, chatId, cb) => {
             try {
-let chat = await checkCache(`chats:${chatId}`,async () => {
-    return [await Chat.findById(chatId), 300]
-})
+let chat = await Chat.findById(chatId)
 
 
                 if (!chat){
@@ -280,7 +281,7 @@ let chat = await checkCache(`chats:${chatId}`,async () => {
                 log(name + " deleted " + messageToDelete.length + " messages", "warning");
                 
                 const toDel = messageToDelete.map(_id => _id.toString())
-                cacheMem.del(toDel)
+      
             } catch (er) {
                 log(er, "bad")
                 cb(false, "unexpected error");
@@ -290,11 +291,9 @@ let chat = await checkCache(`chats:${chatId}`,async () => {
         // editing message
         socket.on("edit message", async (messageData, cb) => {
             try {
-                let message = await checkCache(`messages:${messageData.to}`,async () => {
-                    return [await Message.findById(messageData._id),120]
-                })
+                let message =  await Message.findById(messageData._id)
+
                 
-                message = restoreDoc(message, Message)
                 
                 if (!message){
                     cb(false, "message doesn't exist")

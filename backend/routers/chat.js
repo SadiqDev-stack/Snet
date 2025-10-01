@@ -31,7 +31,7 @@ app.get("/search", async (req, res) => {
 
     // Build regex for case-insensitive partial match
     const regex = new RegExp(searchValue, "i");
-
+ /*
     // Search Users (excluding self)
     const userQueryFilter = {
       $or: [
@@ -54,6 +54,9 @@ app.get("/search", async (req, res) => {
       ...user.toObject(),
       type: "user",
     }));
+*/
+
+const userResults = []
 
     // Search Groups
     const groupQueryFilter = {
@@ -62,7 +65,7 @@ app.get("/search", async (req, res) => {
         { groupDescription: regex },
       ],
       peoples: {
-          $nin: [id.toString()]
+          $nin: [id]
       },
       // neq
       type: {
@@ -80,10 +83,11 @@ app.get("/search", async (req, res) => {
     
 
     const groups = await Chat.find(groupQueryFilter).select("_id groupName groupDescription groupPic peoples")
-    const groupResults = groups.map(group => ({
-      ...group,
-      type: "group"
-    }));
+ // mongodb will later handle remove this later
+  const groupResults = groups.filter(g => {
+        return !g.peoples.includes(id.toString())
+    })
+    
 
     // Combine and return results
     const results = [...userResults, ...groupResults];
@@ -101,11 +105,9 @@ app.post("/block",async (req, res) => {
         const {personId, chatId} = req.body;
         const {id} = req.user;
         
-        let chat = await checkCache(`chats:${chatId}`, async () => {
-            return [await Chat.findById(chatId), 300]
-        })
+        let chat =  await Chat.findById(chatId)
+
         
-        chat = await restoreDoc(chat, Chat)
         
         const otherLogic = chat.type == "private" ? (
             !chat.blockedPeoples.find(_id => _id.toString() == id.toString()) ? "You Cant, You Are Blocked" : false
@@ -126,7 +128,6 @@ app.post("/block",async (req, res) => {
             blocked: true,
         })
         
-        setCache(`chats:${chatId}`, chat, 300)
         
         
         // to notify that blocked peeson and also the chat
@@ -158,11 +159,9 @@ app.post("/unblock",async (req, res) => {
         const {personId, chatId} = req.body;
         const {id} = req.user;
         
-        let chat = await checkCache(`chats:${chatId}`, async () => {
-            return [await Chat.findById(chatId), 300]
-        })
+        let chat = await Chat.findById(chatId)
+
         
-        chat = await restoreDoc(chat, Chat)
         
         const otherLogic = chat.type == "private" ? (
             chat.blockedPeoples.find(_id => _id.toString() == id.toString()) ? "You Cant, You Are Blocked" : false
@@ -185,7 +184,6 @@ app.post("/unblock",async (req, res) => {
             unblocked: true
         })
         
-        setCache(`chats:${chatId}`, chat, 300)
         
         // to notify that blocked peeson and also the chat
     const systemMessage = await Message.create({
@@ -219,11 +217,9 @@ app.post("/setting/update", upload.single("groupPic"), async (req, res) => {
         const {chatId} = req.query;
         
         
-        let chat = await checkCache(`chats:${chatId}`, async () => {
-            return [await Chat.findById(chatId), 300]
-        })
+        let chat = await Chat.findById(chatId)
+
         
-        chat =  await restoreDoc(chat, Chat);
         
         // we cant set private chat chats for friends 
         if(!chat || chat.type == "private"){
@@ -270,8 +266,7 @@ app.post("/setting/update", upload.single("groupPic"), async (req, res) => {
         }
         
         chat = await chat.save();
-        setCache(`chats:${chat._id.toString()}`, chat, 300)
- 
+        
         
         
         // delet heavy data
@@ -361,8 +356,7 @@ app.post("/create", upload.single("groupPic"), async (req, res) => {
         
         
         
-       setCache(`chats:${chat._id.toString()}`, chat, 300)
-    }catch(er){
+           }catch(er){
         log(er)
         res.json({
             created: false,
@@ -376,145 +370,49 @@ app.post("/create", upload.single("groupPic"), async (req, res) => {
 app.post("/join", async (req, res) => {
     try{
        const {type = "public", peoples = "", chatId} = req.body;
-       const {id, email} = req.user;
+       const {id, _id, email} = req.user;
        
-       let chat = await getCache(`chats:${chatId}`) || await Chat.findById(chatId)
-       
-       chat = await restoreDoc(chat, Chat);
-       let isBlocked = false
-       
-       const socket = getSocket(id.toString())
-       
-       // we cant try to create one if not found, for private groups so that friends can chat 
-       if(!chat && type !== "private"){
+       let chat =  await Chat.findById(chatId)
+       if(!chat){
            return res.json({
                joined: false,
                message: "group doesnt exist"
            })
        }
        
-    
-       if(!chat && type == "private"){
-         // we need to create one for friends 
-         chat = await Chat.create({
-             type: "private",
-             peoples,
-             groupName: peoples.map(_id => String(_id)).join(" & "),
-             groupDescription: "system created"
-         })
-         
-         setCache(`chats:${chat._id.toString()}`, chat, 300)
-         
-         await chat.populate("peoples","_id name bio lastSeen profilePic")
-         
-         chat = chat.toObject();
-         chat.messages = [];
-         
-         chat.peoples = chat.peoples.map(person => {
-           //  person = person.toObject()
-             person.online = isOnline(person._id)
-             return person
-         })
-         
-         res.json({
-             joined: true,
-             chat
-         })
-         
-        
-         // notify the friend 
-         const member = chat.peoples.some(person => person._id.toString() !== id.toString());
-         if(member){
-             const systemMessage = await Message.create({
-                 type: "system", 
-                 from: id,
-                 to: chat._id,
-                 content: "system created",
-                 flag: "start chat"
-             })
-             
-             if(socket){
-                 const {name} = socket.io.user;
-                 log(`${name} started chat with ${member.name}`)
-                 socket.to(member).emit('started chat', chat, systemMessage)
-             }
-         }
-       }else{
-          
-           if(chat.peoples.find(_id => _id.toString() == id.toString()) && type !== "private"){
-               return res.json({
-                   joined: false,
-                   message: "you are already in chat"
-               })
-           }else if(chat.type !== "private"){
-              chat.peoples.push(id.toString())
-           }
-           
-           
-           await chat.save();
-           setCache(`chats:${chat._id.toString()}`, chat, 300)
-           
-           
-                      
-           // show joined only if he isnt blocked
-           if(socket){
-               isBlocked = chat.blockedPeoples.find(_id => _id.toString() == id.toString());
-               if(!isBlocked){
-                   const systemMessage = await Message.create({
-                       type: "system",
-                       content: "system created",
-                       from: id.toString(),
-                       to: chat._id.toString(),
-                       flag: "joined"
-                   })
-                   
-                   
-                   const user = await checkCache(`users:${email}`, async () => {
-                       return [await User.findById(id.toString()), 300]
-                   })
-                   
-                   log(`${user.name} joined ${chat.groupName}`)
-                   
-                   const person = {
-                       name: user.name,
-                       online: true,
-                       lastSeen: Date.now(),
-                       bio: user.bio,
-                       _id: user._id.toString()
-                   }
-                   
-                   
-                   await emitSocket(id, chat, "joined group", { ...systemMessage, person})
-               }
-           }
-       }
-       
-       // join only if not blocked
-       if (!isBlocked && socket) {
-         socket.join(chat._id.toString())
-       }
-           
-           
-           chat = await chat.populate("peoples", "_id name bio lastSeen profilePic")
-           
-           const messages = await Message.find({
-               to: chat._id.toString()
-           }).populate("from", "_id name")
-           
-           chat = chat.toObject();
-           chat.messages = messages || []
-           
-           chat.peoples = chat.peoples.map(person => {
-               person.online = isOnline(person._id)
-               return person
-           })
-           
-           
-           res.json({
-               joined: true,
-               chat
-           })
-       
+      chat.peoples.push(_id)
+      await chat.save()
+      chat = await chat.populate("peoples", "_id name bio lastSeen profilePic")
+      
+     chat.peoples = chat.peoples.map(p => {
+          p.online = isOnline(p._id)
+          return p
+      })
+      
+      const messages = await Message.find({to: chatId}).populate("from", "_id name");
+       chat.messages = messages 
+     
+     
+     res.json({
+         joined: true,
+         chat
+     })
+     
+     
+     let systemMessage = await Message.create({
+         from: _id,
+         to: chatId,
+         content: "system generated",
+         type: "message",
+         seenBy: [_id]
+     })
+     
+     const person = await User.findById(_id)
+     systemMessage.person = person
+     chat.peoples = chat.peoples.map(p => p._id)
+     
+     log(systemMessage.from.name + " joined " + chat.groupName)
+     emitSocket(_id, chat, "joined group", systemMessage)
     }catch(er){
         log(er, "bad")
         res.json({
@@ -535,8 +433,7 @@ app.post("/leave", async (req, res) => {
         
         const socket = getSocket(id.toString())
         
-        let chat = await getCache(`chats:${chatId}`) || await Chat.findById(chatId)
-        chat =  await restoreDoc(chat, Chat)
+        let chat =  await Chat.findById(chatId)
         
         if(!chat) return res.json({
             left: false,
@@ -566,7 +463,6 @@ app.post("/leave", async (req, res) => {
     left: true,
     message: `you left ${chat.groupName}`
 })
-        setCache(`chats:${chat._id.toString()}`, chat, 300);
         
         // notify others 
         const socket = getSocket(id.toString());
@@ -599,7 +495,6 @@ app.post("/leave", async (req, res) => {
            await Message.deleteMany({
                 to: chat._id.toString()
             });
-            await cacheMem.del(`chats:${chat._id}`);
             log(`last member left group ${chat.groupName}, group data is deleted`, "warning")
         }
     }catch(er){

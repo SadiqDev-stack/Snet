@@ -530,10 +530,7 @@ const chatDetail = {
 }
 
 const getChat = id => {
-  worker.postMessage("getChat", id);
-  worker.onmessage("gettedChat", e => {
-    return e.data
-  })
+  return chats.find(c => c._id == id)
 }
 
 // for storing in localstorage
@@ -813,10 +810,6 @@ filterChats()
     console.log('updated')
   }
   
-  const updateNav = (chat, goTop = false) => {
-    const newChat = chatNavComp(chat);
-  }
-  
   // we need to update peoples when peoples join or leave 
   const updatePeoples = chat => {
     const {_id} = chat;
@@ -930,6 +923,7 @@ filterChats()
        }else{
          chat.online = chat.peoples.some(p => p._id !== userId && p.online)
        }
+       chat.groupPic = chat.groupPic || {}
       
        const chatHead = chatHeadComp(chat);
        const messagesBox = messagesBoxComp(chat.messages, chat);
@@ -976,6 +970,8 @@ const MAX_CHAT_RENDER = 10;
       clear(Sorters);
       
       const chatIds = []
+      
+      chats = chats.sort((a, b) => a.updateTime - b.updateTime)
      
      let chatIndex = 0;
      const renderChats = (self) => {
@@ -1016,7 +1012,7 @@ const MAX_CHAT_RENDER = 10;
   
  if(chats.length && userInfo){
    updateUi({chats, userInfo});
-  // updateDashboard()
+   updateDashboard()
  }else{
    updateDashboard(token)
  }
@@ -1110,6 +1106,7 @@ CreateGroupBtn.onclick = async e => {
       lastSeen: Date.now(),
       profilePic: userInfo.profilePic
     }]
+    res.chat.updateTime = Date.now()
     
     joinChat(res.chat);
 }
@@ -1196,14 +1193,32 @@ listenSocket("goes offline", (data) => {
 })
 
 
+const updateNav = (chat, chatNav) => {
+  
+  chat.setmessages(chat.messages)
+chat.setupdateTime(chat.updateTime)
+chat.setnewMessages(chat.newMessages)
+
+if(chat.updateTime > chats[0].updateTime){
+  chatNav.remove();
+  ChatNavs.prepend(chatNav)
+}
+}
+
+
 // incoming messages 
 const addNewMessage = async message => {
  const { from, to } = message;
 const {messagesBox, chatNav} = chatWindows[to];
-const chat = await getChat(to);
-console.log('yes')
-messagesBox.addMessage(message);
+const chat = getChat(to);
+const person = chat.peoples.find(p => p._id == message.from)
+if(!person) return
+message = {...message, from: {
+  name: person.name,
+  _id: person._id
+}}
 
+messagesBox.addMessage(message);
 chat.messages.push(message);
 chat.newMessages++;
 chat.updateTime = message.createdAt;
@@ -1218,11 +1233,8 @@ if (focusedChat == to) {
   play(SentSound)
 }
 
-updateChatData(chat)
-chatNav.remove();
-const newNav = chatNavComp(chat)
-ChatNavs.prepend(newNav);
-chatWindows[to] = {...chatWindows[to], chatNav: newNav}
+updateNav(chat, chatNav)
+scroll(messagesBox)
 }
 
 // sending messages 
@@ -1267,7 +1279,7 @@ play(SentSound);
 
 // joining chat 
 
-const joinChatWithFetch = async (id, type = "public", peoples) => {
+const joinChatWithFetch = async (id, type = "public", peoples = []) => {
   load(true)
   const res = await request.post("/api/chats/join", 
   {
@@ -1275,6 +1287,8 @@ const joinChatWithFetch = async (id, type = "public", peoples) => {
     type,
     peoples
   })
+  
+  
     
     if(!res) return
     
@@ -1283,7 +1297,22 @@ const joinChatWithFetch = async (id, type = "public", peoples) => {
       return
     };
     
+    
+    
+    
+    
+    res.chat.peoples.push({
+      name: userInfo.name,
+      _id: userId,
+      online: true,
+      lastSeen: Date.now(),
+      bio: userInfo.bio,
+      online: true
+    })
+    
+    
     joinChat(res.chat);
+    
 }
 
 
@@ -1404,9 +1433,10 @@ JoinChatBtn.onclick = e => {
 
 listenSocket("joined group",async (systemMessage) => {
   systemMessage.from = {
-    name: systemMessage.person.name,
-    _id: systemMessage.person._id
+    _id: systemMessage.person._id,
+    name: systemMessage.person.name
   }
+  console.log("joined group " + systemMessage)
   
   const group = await getChat(systemMessage.to);
   const peoples = group.peoples.map(p => p._id);
@@ -1461,6 +1491,7 @@ const leaveGroupWithFetch = id => {
 listenSocket("left group", (systemMessage) => {
   const {to, from} = systemMessage;
   addNewMessage(systemMessage);
+  console.log("left someone")
   chat = chats.map(chat => {
     if(chat._id == to){
       const peoples = chat.peoples.map(p => p._id)

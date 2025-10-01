@@ -84,6 +84,7 @@
     /* Firefox */
     -ms-overflow-style: none;
     /* IE and Edge */
+    user-select: none;
   }
   
   *::-webkit-scrollbar {

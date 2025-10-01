@@ -3,34 +3,27 @@ const profileHeadName = name => {
   return name.split(" ").slice(0, 2).map(n => n.charAt(0)).join(" ")
 }
 
-function profileHeadComp(chat){
-  const {groupName, groupPic, online, type = "group"} = chat;
-  
+function profileHeadComp(pic, online = "false"){
   const head = createEle("div", {
-    "class": `profileHead profileHead-${chat._id}`
+    "class": `profileHead`
   })
   
-  head.innerHTML = `<img style="display='none'> loading="lazy" class="display"></img>
-   ${online ? `<div class="isOnline"></div>` : ""}
-  `
+  const image = new Image({
+    src: pic.url,
+    fallback: pic.fallback || pic.url,
+    maxTries: false,
+  })
   
-  head.updateImage = (url, altText = "🚫") => {
-    const img = head.querySelector(".display");
-    img.onload = () => {
-    open(img)
-  }
-    
-   
-    img.onerror = () => {
-       img.src = `./images/${type == 'private' ? "person" : "group"}Dp.png`
-    }
-   
-    img.src = url;
-    img.altText = altText
-  }
- 
-   head.updateImage(`${API_BASE_URL}/${groupPic?.url}`, type)
-       
+  
+  
+  image.classList.add("display");
+
+  
+  const onlineStatus = createEle('div', {
+    "class": online ? 'isOnline' : ""
+  })
+  
+  head.append(image, onlineStatus)
   return head
 }
 
@@ -56,23 +49,13 @@ function peoplesHeadComp(chatData){
   head.innerHTML = `
         <div class="profileHead"></div>
         <div class="name chatName-${_id}"></div>
-        <div class="peoplesCount gray">Group have <span class="chatPeoplesCount-${_id}">${peoples.length}</span> members</div>
+        <div class="peoplesCount gray"></div>
         <div class="detail">
           <div class="description chatDescription-${_id}">
           </div>
           <div class="time gray">
-            Created On ${formatTime(createdAt)}
           </div>
           <div class="privacy gray">
-          this is <span class="chatType-${_id}">${chatData.for}</span> Group
-          <br>
-          ${chatData.for == "private" ?
-            "only peoples with this group id can join the chat and message" : 
-            (chatData.for == "public" ? 
-              "anyone can search and join this chat to message"
-              : "everybody using this application is added to this chat and can see all messages sent anytime, this chat is owned by the ceo"
-            )
-          }
           </div>
           <div class="chatId">
            Group _Id: ${_id}
@@ -90,19 +73,39 @@ function peoplesHeadComp(chatData){
   }
   
   
-  head.changeProfileHead = chat => {
-    head.querySelector(".profileHead").replaceWith(profileHeadComp(chat));
-    head.querySelector(".name").textContent = chat.groupName
+  head.changeHead = (p = chatData.groupPic) => {
+    head.querySelector(".profileHead").replaceWith(profileHeadComp(p));
   }
   
-  head.changeDescription = description => {
-    setContent(head, `Description: ${description}`, ".detail .description")
+  head.changeDescription = (d = chatData.description) => {
+    setContent(head, `Description: ${d}`, ".detail .description")
   }
   
-  head.changeProfileHead(chatData);
-  head.changeDescription(groupDescription)
-
-
+  head.changeCreatedAt = (t = chatData.createdAt) => {
+    head.querySelector(".time").textContent = `Created On ${formatTime(t)}`
+  }
+  
+  head.changePeoples = (p = chatData.peoples) => {
+    head.querySelector(".peoplesCount").innerHTML = `Group have <span class="chatPeoplesCount-${_id}">${p.length}</span> members`
+  }
+  
+  head.changeFor = (f = chatData.for) => {
+    head.querySelector(".privacy").innerHTML = `          this is <span class="chatType-${_id}">${chatData.for}</span> Group
+          <br>
+          ${f == "private" ?
+            "only peoples with this group id can join the chat and message" : 
+            (f == "public" ? 
+              "anyone can search and join this chat to message"
+              : "everybody using this application is added to this chat and can see all messages sent anytime, this chat is owned by the ceo"
+            )
+          }`
+  }
+  
+  head.changeName = (n = chatData.groupName) => {
+    head.querySelector(".name").textContent = n
+  }
+  
+  
   return head
   
 }
@@ -154,31 +157,23 @@ function personComp(personData, chat){
   }
   
     
-  user.updateProfileHead = personData => {
-  user.querySelector(".profileHead").replaceWith(
-    profileHeadComp({
-      groupPic: personData.profilePic,
-      groupName: personData.name,
-      type: 'private'
-    }))
-  }
+  user.changeHead = personData => user.querySelector(".profileHead").replaceWith(profileHeadComp({...personData.profilePic, fallback: "./images/personDp.png"}, personData.online))
   
-  user.updateName = (name) => {
+  user.changeName = (name) => {
     setContent(user, shortenText(name), ".head .name");
   }
   
-  user.updateBio = (bio) => {
+  user.changeBio = (bio) => {
     setContent(user, shortenText(bio), ".body .bio")
   }
   
-  user.update = (info) => {
-    user.updateProfileHead(info);
-    user.updateName(info.name)
-    user.updateBio(info.bio)
+  user.changeAll = (info) => {
+    user.changeHead(info);
+    user.changeName(info.name)
+    user.changeBio(info.bio)
   }
   
-  
-  user.update(personData)
+  user.changeAll(personData)
  
   return user
 }
@@ -310,16 +305,15 @@ function chatHeadComp(chat){
       </div>
   `
   
-  head.changeHead = chat => {
-    head.querySelector(".profileHead").replaceWith(profileHeadComp(chat))
+  head.changeHead = h => {
+     head.querySelector(".profileHead").replaceWith(profileHeadComp(h))
   }
   
   head.changeName = name => {
     setContent(head, name, ".body .name");
   }
   
-  head.changeName(type !== "private" ? groupName : person.name);
-  head.changeHead(chat)
+  
   
   setContent(head, 
     type !== "private" ? (
@@ -568,9 +562,7 @@ function peoplesWrapperComp(chatData){
     "class": "peoples"
   })
   
-  chatData.peoples.forEach(pr => {
-  if(typeof pr == 'object') peoples.appendChild(personComp(pr, chatData))
-  })
+  
   const searchBar = peoplesSearch(peoples)
  
   
@@ -589,6 +581,16 @@ function peoplesWrapperComp(chatData){
     if(p) p.update(info)
   }
   
+  peoples.changeAll = pls => {
+    clear(peoples);
+    pls.forEach(person => {
+      peoples.append(personComp(person, chatData))
+    })
+  }
+  
+  
+  wrapper.head = head;
+  wrapper.peoples = peoples;
   return wrapper
 }
 
@@ -634,7 +636,7 @@ function chatNavComp(chat){
   })
   
   nav.innerHTML = `
-        <div class='profileHead-${_id}'></div>
+        <div class='profileHead profileHead-${_id}'></div>
         <div class="body">
         <div class="head">
           <div class="name chatName-${_id}"></div>
@@ -651,35 +653,27 @@ function chatNavComp(chat){
    const navMessage = getNavContent(chat)
    
   // for displaying chats 
+  const {messagesBox, chatHead, messageInput, peoplesWrapper} = chatWindows[_id]
+   
    nav.onclick = e => {
-     console.time("nav")
-     const {messagesBox, chatHead, messageInput, peoplesWrapper} = chatWindows[_id]
-     focusedChat = _id;
+       focusedChat = _id;
      
-         if(!e.target.className.includes("display")){
+         if(!e.target.className.includes("profileHead")){
            openBar(MessageBar, "block");
-         MessageBar.innerHTML = ""
+           MessageBar.innerHTML = ""
            // onback remove id 
            onBack = () => {
              focusedChat = ""
              return true
            }
 
-          MessageBar.appendChild(chatHead)
-           MessageBar.appendChild(messagesBox)
-           MessageBar.appendChild(messageInput)
-          /*$('.messageBar .messages').replaceWith(messagesBox);
-           $('.messageBar .head').replaceWith(chatHead);
-           $('.messageBar .messageInput').replaceWith(messageInput)
-    */
-           
+           MessageBar.append(chatHead, messagesBox, messageInput)
            scroll(messagesBox)
            seeMessage(chat)
          }else if(type !== 'private'){
            openBar(PeoplesBar);
            $('.peoplesBar .wrapper').replaceWith(peoplesWrapper);
         }
-        console.timeEnd("nav")
   }
   
   
@@ -689,72 +683,71 @@ function chatNavComp(chat){
   const [name, time] = nav.querySelectorAll(".head *")
   const [message, count] = nav.querySelectorAll(".feet *");
   
-  const eleFromBars = selector => {
-    const elements = [];
-    const chatWindow = chatWindows[_id];
-    
-    for(bar in chatWindow){
-        const eles = chatWindow[bar].querySelectorAll(selector);
-        if(eles.length) eles.forEach(e => elements.push(e))
-    }
-    
-    return elements
+  
+  chat.setAll = (c = chat) => {
+  for (const k in c) {
+    if(k.includes("set")) return
+    const setter = chat[`set${k}`]
+    if (setter) setter(c[k])
+  }
+}
+  
+  
+  chat.setgroupName = newName => {
+    name.textContent = shortenText(newName, 20);
+    chatHead.changeName(newName)
+    peoplesWrapper.head.changeName(newName)
+    chat.groupName = newName
+  }
+
+  chat.setupdateTime = (time = chat.updateTime) => {
+    time.textContent = formatTime(time)
+    chat.updateTime = time
   }
   
-  nav.update = {
-   head: function(chat, self = false){
-    const selector = `.profileHead-${chat._id}`;
-    let heads = !self ? eleFromBars(`*${selector}`) :  [nav.querySelector(selector)]
-    heads.forEach(head => {
-      head.replaceWith(profileHeadComp(chat))
-    }) 
-  },
-   name: function(name, self = false){
-    const names = self ? [nav.querySelector(`.chatName-${_id}`)] : eleFromBars(`*.chatName-${_id}`)
-    names.forEach(nm => {
-      setContent(nm, name)
-    })
-  },
-  message: function(chat){
-    setContent(nav, shortenText(getNavContent(chat), 33), `.feet .message`);
-    if(chat.newMessages){
-      nav.querySelector(".time").classList.add("new");
-      nav.querySelector(".count").style.display = "block";
-      setContent(nav, chat.newMessages, ".count");
-    }else{
-      nav.querySelector(".count").style.display = "none"
-    }
-  },
-  all: function(chat) {
-  this.name(chat.groupName, true);
-  this.head(chat, true);
-  this.message(chat)
-  },
-  description: function(description) {
-    const eles = eleFromBars(`.chatDescription-${_id}`);
-    eles.forEach(ele => {
-      ele.textContent = description
-    })
-  },
-  type: function(type){
-    const eles = eleFromBars(`.chatType-${_id}`);
-eles.forEach(ele => {
-  ele.textContent = type
-})
-  },
-  peoples: function(peoples){
-    const eles = eleFromBars(`.peoplesCount-${_id}`);
-    eles.forEach(ele => {
-      ele.textContent = peoples.length
-    })
-  }
+  chat.setnewMessages = (c = chat.newMessages) => {
+    count.style.display = c ? "block" : "none"
+    count.textContent = c || 0
+    chat.newMessages = c
   }
   
+  chat.setgroupPic = pic => {
+    pic = {...pic, fallback: `./images/${chat.type == "group" ? "groupDp" : "personDp"}.png`, url: `${API_BASE_URL}/${pic.url}` }
+    const newHead = profileHeadComp(pic, false)
+    nav.profileHead.replaceWith(newHead);
+    nav.profileHead = newHead
+    chatHead.changeHead(pic)
+    peoplesWrapper.head.changeHead(pic) 
+  }
   
+  chat.setgroupDescription = dc => {
+    peoplesWrapper.head.changeDescription(dc)
+    chat.groupDescription = dc
+  }
   
+  chat.setmessages = (messages = chat.messages) => {
+    message.textContent = getNavContent({...chat, messages})
+    chat.messages = messages
+  }
   
-  nav.update.all(chat)
+  chat.setcreatedAt = time => {
+    peoplesWrapper.head.changeCreatedAt(time)
+  }
   
+  chat.setpeoples = p => {
+    peoplesWrapper.peoples.changeAll(p)
+  }
+  
+  chat.setfor = f => {
+    peoplesWrapper.head.changeFor(f)
+  }
+  
+  chat.setonline = o => {
+   console.log(o)
+  }
+  
+  chat.setAll()
+ 
   return nav
 }
 
@@ -1042,12 +1035,39 @@ function sorter(sortData, index){
 
 
 // action 
-const chatActionButtonHandler = (_id, chatData, input) => {
- const {messagesBox, messageInput} = chatWindows[_id];
- const message = messageInput.message;
- console.log(_id, chatData, input)
-
-  
+const chatActionButtonHandler = async (_id, chatData, input) => {
+ const {messagesBox, messageInput, chatNav} = chatWindows[_id];
+ const message = input.message;
+ const messageData = {
+   from: {
+     _id: userId,
+     name: userInfo.name
+   },
+   to: _id,
+   content: message,
+   type: 'message',
+   _id: now(),
+   createdAt: now(),
+   seenBy: []
+ }
+ 
+ try{
+   const ui = messageBoxComp(messageData, true)
+   messagesBox.addMessage({...messageData, action: "sending"})
+   const res = await request.post("/api/message/send", messageData)
+   if(!res.sent){
+     messagesBox.removeMessage(messageData)
+   }else {
+     messagesBox.replaceMessage(messageData, false, false, res.message._id)
+     play(SentSound)
+     scroll(messagesBox)
+     chatData.messages.push({...messageData, _id: res.message._id})
+     updateNav(chatData, chatNav)
+   }
+ }catch(er){
+   console.log(er)
+   messagesBox.removeMessage(messageData)
+ }
   messageInput.clear()
 }
  
@@ -1080,12 +1100,10 @@ function messageInputComp(chatData, messagesBox){
             ok thx buddy i will checkout.. and make it very very interested...
           </div>
         </div>
-        <div class="attach clickable">📎 attach files</div>
-        <textarea class="input" placeholder="Type your message here..." name="" id="" cols="" rows=""></textarea>
-        <canvas></canvas>
+     <textarea class="input" placeholder="Type your message here..." name="" id="" cols="" rows=""></textarea>
         </div>
-        <div class="action">
-          <img src="./images/record.png" alt="">
+        <div class="action clickable">
+          <img src="./images/send.png" alt="">
         </div> 
     ` : ` 
      <div> message is not allowed in this chat</div>
@@ -1093,42 +1111,17 @@ function messageInputComp(chatData, messagesBox){
   
   if(messageAllowed || createdBy == userId){
   const input = section.querySelector(".input");
-  const ActionBtn = section.querySelector(".action img");
-  const AttachBtn = section.querySelector(".attach")
-  const audioCanvas = section.querySelector("canvas")
-  
-  const updateSelf = msg => {
-    if(msg.trim()){
-      ActionBtn.src = "./images/send.png";
-      section.sendType = "message";
-      close(audioCanvas)
-      open(input)
-    }else{
-      ActionBtn.src = "./images/record.png"
-      section.sendType = "voice"
-      close(input)
-    }
-  }
+  const SendBtn = section.querySelector(".action");
+    
   
   // main function
-  AttachBtn.onclick = () => {
-    const selection =  new FileSelection({
-      maxSize: 50,
-      maxCount: 1000
-    })
-    
-    selection.onSelect = files => {
-     AttachBtn.textContent = `Attached ${files.length < 100 ? files.length : "100+"} files`
-     section.files = files || []
-    }
-  }
-  
+
   
   let message = draftMessages[_id] || "";
   input.value = message;
   section.message = message;
   
-  updateSelf(message)
+  
   
   section.clear = () => {
     message = "";
@@ -1137,7 +1130,7 @@ function messageInputComp(chatData, messagesBox){
     section.editData = {};
     input.value = "";
     close(ReplyBox);
-    updateSelf("")
+    draftMessages[_id] = ""
   }
   
   section.changeInput = (content = "", type = "", data = {}) => {
@@ -1151,42 +1144,21 @@ input.value = content;
   let isTyping = false;
   onInput(input, value => {
     section.message = value;
+    message = value;
     draftMessages[_id] = value.trim();
     if(isTyping){
       socket.emit("is typing", _id)
     }
     isTyping = false;
-    updateSelf(value)
   })
     
   setInterval(() => {
     isTyping = true
   }, typingTimeout * 1000);
   
-  ActionBtn.addEventListener("touchstart", () => {
-    if(section.sendType == "voice"){
-      const recorder = new AudioRecorder(audioCanvas)
-      section.recorder = recorder
-      recorder.onStart(() => {
-        open(audioCanvas)
-      })
-      recorder.onFinish((b) => {
-        if(!b){
-          updateSelf("h")
-          return 
-        }
-        const url = URL.createObjectURL(b);
-        const audioEle = Audio({
-          src: url
-        });
-        messagesBox.appendChild(audioEle)
-      })
-      recorder.onError(recorder.onFinish)
-      recorder.start()
-    }
-    ActionBtn.addEventListener("touchend", () => {
-  section.recorder.stop()
-})
+  
+  SendBtn.addEventListener("click", () => {
+    chatActionButtonHandler(_id, chatData, section)
   })
   
   }else if(type == "private" && blockedPeoples.includes(person._id)){
@@ -1287,11 +1259,7 @@ online = false
   }
   
   const head = display.querySelector(".profileHead");
-  head.replaceWith(profileHeadComp({
-    groupName: chatName,
-    groupPic: chatPic,
-    online
-  }))
+  head.replaceWith(profileHeadComp({...chatPic, url: `${API_BASE_URL}/${chatPic.url}`, fallback: "./images/groupDp.png"}))
   
   setContent(display, chatName, ".head .name")
   setContent(display, chatType, ".head .type")
@@ -1915,12 +1883,13 @@ const updateType = (type) => {
   
   function Image(data) {
   const defaultData = {
-    src: `https://picsum.photos/300/200?random=${Date.now()}`,
+    src: `./images/play.png`,
     loading: "lazy",
-    caption: "this is image caption",
+    caption: false,
     loaded: false,
     retryTime: 1, // in seconds
-    maxTries: true // or number like 3
+    maxTries: true, // or number like 3,
+    fallback: "./images/failure.png",
   };
   
   let loaded = false;
@@ -1933,9 +1902,9 @@ const updateType = (type) => {
     class: "image shimmer"
   });
   
-  const caption = createEle("span", {
+  const caption = data.caption ? createEle("span", {
     class: "caption display"
-  }, data.caption);
+  }, data.caption) : ""
   
   const image = createEle("img", {
     ...data
@@ -1958,14 +1927,15 @@ const updateType = (type) => {
       }, data.retryTime * 1000);
     } else {
       failed = true;
-      image.src = "./images/failure.png";
+      image.src = data.fallback;
     }
   };
+  
   
   image.onload = () => {
     loaded = true;
     image.style.opacity = 1;
-    caption.style.opacity = 1;
+    if(caption) caption.style.opacity = 1;
   };
   
   onLongPress(wrapper, () => {

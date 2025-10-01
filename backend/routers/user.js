@@ -75,9 +75,6 @@ app.post("/register", upload.single("profilePic"), async (req, res) => {
         
         log(`${name} registered an account`);
         
-        // cache user data briefly
-        setCache(`users:${email}`, user, 60);
-        
         res.json({
             registered: true,
             role: user.role,
@@ -169,8 +166,7 @@ console.log(update)
 if (update && update.verified) {
   log("account verified");
   sendMessage(res, "Account Verification Succefull", `/${update.role}_dashboard.html`)
-  setCache(`users:${user.email}`, update, 60)
-} else {
+  } else {
   throw new Error()
 }
 }
@@ -183,11 +179,10 @@ if (update && update.verified) {
 app.get("/dashboard", authorize, async (req, res) => {
     try {
         const { id, email } = req.user;
-        let user = await checkCache(`users:${email}`, async () => {
-            return [await User.findById(id.toString()), 60]
-        })
+        let user = await User.findById(id.toString())
+
         
-        console.log(user)
+        
       
         if (!user || !user.verified) {
             res.json({
@@ -273,9 +268,8 @@ app.post("/setting/basic/update", authorize, upload.single("profilePic"), async 
         
         
         
-        let user = await checkCache(`users:${email}`, async () => {
-            return [await User.findById(id.toString()), 120];
-        })
+        let user = await User.findById(id.toString())
+
         
         
         
@@ -284,8 +278,7 @@ app.post("/setting/basic/update", authorize, upload.single("profilePic"), async 
             message: "user doesn't exist"
         })
         
-        user = await restoreDoc(user, User);
-   
+        
        if(updates.email !== user.email || updates.phone !== user.phone){
            // they have there own routes, /update/verify
             return res.json({
@@ -325,7 +318,7 @@ app.post("/setting/basic/update", authorize, upload.single("profilePic"), async 
             message: "Account Settings Updated"
         })
         
-        setCache(`users:${user.email}`, user);
+        
         
         /*
         // create and emit the messages to all his groups 
@@ -433,8 +426,7 @@ app.get("/password/reset", async (req, res) => {
  if (update) {
     log("password resetted", "warning");
     sendMessage(res, "Password Resetted Succefully", update.verified ? `/${update.role}_dashboard.html` : "/verify.html")
-    setCache(`users:${user.email}`, update, 60)
-} else {
+   } else {
     throw new Error()
 }
     }catch{
@@ -449,9 +441,8 @@ app.get("/info", async (req, res) => {
         log("yes")
         const {token} = req.query;
         const data = await getTokenData(token);
-        const user = await checkCache(`users:${data.email}`, async () => {
-            return [await User.findById(data.id.toString()), 120]
-        })
+        const user = await User.findById(data.id.toString())
+
         
         if(!user) return res.redirect("/login.html")
         res.json({

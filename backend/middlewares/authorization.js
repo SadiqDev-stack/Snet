@@ -19,6 +19,7 @@ export default async (req, res, next) => {
         
         userData.id = new ObjectId(userData.id);
         req.user = userData;
+        req.user._id = userData.id.toString()
         
         next();
     } catch (er) {

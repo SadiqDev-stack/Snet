@@ -1,7 +1,9 @@
 import Pending from './models/pending.js';
 import { isOnline, getSocket } from "./users.js";
+import {log} from "./middlewares/logger.js"
 
 const emitSocket = async (id, to, name, data) => {
+  try{
   const socket = getSocket(id);
   const offlineMembers = [];
   const onlineMembers = [];
@@ -37,7 +39,9 @@ const emitSocket = async (id, to, name, data) => {
       }
     }
   }
-
+  }catch(er){
+    log("socket error " + er, "bad")
+  }
  };
 
 const listenSocket = (id, name, cb) => {

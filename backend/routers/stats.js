@@ -12,28 +12,18 @@ const app = Router();
 app.get("/public", async (req, res) => {
     try {
 
-        const totalUsers =   await checkCache("stats:totalUsers",async () => {
-          return  [await User.find().countDocuments(), 300] // 5minute
-        })
+        const totalUsers = await User.find().countDocuments()
      
-        const onlineUsers =   await checkCache("stats:onlineUsers",async () => {
-          return [totalOnline(), 60] // 1minute
-        })
+        const onlineUsers = totalOnline()
+
         
-        const totalGroups =  await checkCache("stats:totalGroups",async () => {
-            return [await  Chat.find({
-                   
-                }).countDocuments()
-                , 300] // 5minute 
-        })
+        const totalGroups =  await  Chat.find().countDocuments()
+
+        const totalChats = await  Chat.find().countDocuments()
+
         
-        const totalChats =  await checkCache("stats:totalChats",async () => {
-           return [await  Chat.find().countDocuments(), 300] // 5minute
-        })
-        
-        const totalMessages =  await checkCache("stats:totalMessages",async () => {
-            return [await  Message.find().countDocuments(), 60] // 1minure
-        })
+        const totalMessages = await  Message.find().countDocuments()
+
         
         const editedMessages =  await checkCache("stats:editedMessages",async () => {
             return [await  Message.find({
@@ -41,11 +31,9 @@ app.get("/public", async (req, res) => {
             }).countDocuments(), 60] // 1minite
         })
         
-        const deletedMessages =  await checkCache("stats:editedMessages",async () => {
-    return [await  Message.find({
+        const deletedMessages = await  Message.find({
         action: "deleted"
-    }).countDocuments(), 60] // 1minite
-})
+         }).countDocuments()
         
         res.json([
             {

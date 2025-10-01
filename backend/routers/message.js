@@ -3,44 +3,33 @@ import { Router } from "express";
 import Chat from "../models/chat.js";
 import User from "../models/user.js";
 import Message from "../models/message.js";
-import {  checkCache } from "../helper.js"
+import {  checkCache , setCache, restoreDoc} from "../helper.js"
 import {totalOnline} from "../users.js";
+import {emitSocket} from "../socket.js"
+import {log} from "../middlewares/logger.js";
+import authorize from '../middlewares/authorization.js'
 const {MAX_UPLOAD_SIZE} = process.env;
 const app = Router();
 
-app.post("/send", upload.multiple("files"), async (req, res, next) => {
+app.post("/send", authorize, async (req, res, next) => {
   try{
+    const {id} = req.user;
     // check group existnace 
-    const chat = await checkCache(`chats:${messageData.to}`, async => {
-      return [await Chat.findBydId(messageData._id)]
-    });
-    
-    chat = await restoreDoc(chat, Chat);
     
     const messageData = req.body;
     delete messageData._id;
     
-    if(req.files){
-      let fileSizes = 0;
-      req.files.forEach(file => {
-        fileSizes += file.size / (1024);
-        if (fileSizes == MAX_UPLOAD_SIZE) {
-          break
-          return res.json({
-            sent: false,
-            message: "maximum file size exceeded"
-          })
-        }
-      });
-      
-      req.files = req.files.map(async fl => await uploadFile(fl))
+    let chat = await Chat.findById(messageData.to)
+
+    
+    
+    if(!chat || !messageData){
+      return res.json({
+        sent: false,
+        message: !chat ? 'chat doesnt exist' : 'message data needed'
+      })
     }
     
-    // create message instance 
-    messageData.files = messageData.files.map(async (fl, ind) => {
-      fl = {...fl, ...req.files[ind]}
-      return fl
-    })
     
     const message = await Message.create(messageData)
     res.json({
@@ -48,12 +37,12 @@ app.post("/send", upload.multiple("files"), async (req, res, next) => {
       message
     })
     
-    chat.currentTime = Date.now();
-    await chat.save()
-    // emit message 
-    emitSocket("sent message", message, chat.peoples);
+    chat.currentTime = Date.now()
+    await chat.save();
+    
+    emitSocket(id, chat, "sent message", message);
   }catch(er){
-    next()
+    log(er, "bad")
   }
 })
 
