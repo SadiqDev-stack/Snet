@@ -150,7 +150,7 @@
             formData.append("profilePic", profilePic);
           }
 
-          axios.post("http://localhost:8080/api/user/register", formData)
+          axios.post("/api/user/register", formData)
             .then(res => {
               const user = res.data;
               if (user.registered) {

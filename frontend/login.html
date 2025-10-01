@@ -76,7 +76,7 @@
             loginBtn.onclick = () => {
                 if (valid(cresidential)) {
                     load(true);
-                    axios.post("http://localhost:8080/api/user/login", cresidential)
+                    axios.post("/api/user/login", cresidential)
     .then(res => {
         const user = res.data;
         if (user.found) {

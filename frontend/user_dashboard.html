@@ -556,7 +556,7 @@ GroupsBarNavs.forEach(nav => {
 })
 
 /* setting io */
-let socket = io("http://localhost:8080", {
+let socket = io(API_BASE_URL, {
   autoConnect: false,
   auth: { token },
   reconnection: true, // Enable reconnection
