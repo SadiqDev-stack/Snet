@@ -143,6 +143,7 @@ const rewriteFile = async (file, location) => {
 const cacheMem = Redis.createClient();
 
 const setCache = (key, data, expiring = true) => {
+    return true // for testing without redis, just return true to always set cache and get fresh data
     const serializedData = JSON.stringify(data);
     if (expiring === true) {
         return cacheMem.set(key, serializedData, {
@@ -160,6 +161,7 @@ const setCache = (key, data, expiring = true) => {
 };
 
 const getCache = key => {
+    return false // for testing without redis, just return false to always miss cache and get fresh data
     return new Promise((res, rej) => {
         cacheMem.get(key)
             .then(data => {
@@ -178,6 +180,9 @@ const getCache = key => {
 };
 
 const checkCache = async (key, notFoundCb) => {
+    // for testing without redis, just return the result of notFoundCb to always miss cache and get fresh data
+    const [freshData, expiring = false] = notFoundCb ? await notFoundCb() : [];
+    return freshData || false;
     try {
         const data = await getCache(key);
         if (data){
