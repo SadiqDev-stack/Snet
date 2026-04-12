@@ -152,7 +152,3 @@ For inquiries or collaboration:
 ## ⭐ Final Note
 
 This project reflects a strong backend architecture with real-world scalability in mind. If you're exploring real-time systems, caching strategies, and production-ready Node.js apps — this is a solid reference.
-
----
-
-🔥 Keep building. This is the kind of project that actually gets attention.
